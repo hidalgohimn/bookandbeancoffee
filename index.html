@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book & Bean Coffee | book-and-bean-coffee</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-cream: #F8F5EE;
+            --surface-cream: #FFFDF9;
+            --primary-brown: #3D2314;
+            --light-brown: #6E473B;
+            --olive-green: #556B2F;
+            --olive-light: #8A9A5B;
+            --text-dark: #2A2421;
+            --text-muted: #6B625D;
+            --border-color: #E6DFD3;
+            --shadow: 0 10px 30px rgba(61, 35, 20, 0.08);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .brand-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Header & Nav */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(248, 245, 238, 0.96);
+            backdrop-filter: blur(10px);
+            z-index: 900;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--primary-brown);
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background-color: var(--primary-brown);
+            color: var(--bg-cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.35rem;
+            line-height: 1.1;
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--olive-green);
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.75rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--olive-green);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cart-btn-wrapper {
+            position: relative;
+        }
+
+        .cart-btn {
+            background-color: var(--surface-cream);
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            color: var(--primary-brown);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .cart-btn:hover {
+            border-color: var(--primary-brown);
+            background-color: #fff;
+        }
+
+        .cart-count {
+            background-color: var(--olive-green);
+            color: white;
+            font-size: 0.75rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-brown);
+            color: var(--bg-cream);
+            padding: 0.65rem 1.3rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--light-brown);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-content h2 {
+            font-size: 3rem;
+            color: var(--primary-brown);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--olive-green);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .hero-description {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-outline {
+            border: 2px solid var(--olive-green);
+            color: var(--olive-green);
+            padding: 0.65rem 1.3rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--olive-green);
+            color: white;
+        }
+
+        .hero-banner {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: linear-gradient(135deg, var(--primary-brown), var(--light-brown));
+            min-height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-banner-inner h3 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-banner-inner p {
+            opacity: 0.9;
+        }
+
+        /* General Section Layout */
+        section {
+            padding: 4rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title h3 {
+            font-size: 2.25rem;
+            color: var(--primary-brown);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            color: var(--olive-green);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: center;
+            background-color: var(--surface-cream);
+            padding: 3rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+
+        .badge-verified {
+            display: inline-block;
+            background-color: rgba(85, 107, 47, 0.1);
+            color: var(--olive-green);
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Search & Filter Controls */
+        .menu-controls {
+            max-width: 800px;
+            margin: 0 auto 2.5rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            align-items: center;
+        }
+
+        .search-box {
+            width: 100%;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.85rem 1.25rem 0.85rem 3rem;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            background-color: var(--surface-cream);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--olive-green);
+            box-shadow: 0 0 0 3px rgba(85, 107, 47, 0.1);
+        }
+
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            opacity: 0.6;
+        }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1.25rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background-color: var(--olive-green);
+            color: white;
+            border-color: var(--olive-green);
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .menu-card {
+            background-color: var(--surface-cream);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .menu-card h4 {
+            color: var(--primary-brown);
+            font-size: 1.15rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .menu-card .price {
+            color: var(--olive-green);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .menu-card p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .add-to-cart-btn {
+            background-color: var(--bg-cream);
+            border: 1px solid var(--primary-brown);
+            color: var(--primary-brown);
+            padding: 0.6rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: var(--primary-brown);
+            color: white;
+        }
+
+        /* Slide-in Cart Drawer */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cart-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            max-width: 90%;
+            height: 100%;
+            background-color: var(--surface-cream);
+            z-index: 1001;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            transition: right 0.3s ease;
+        }
+
+        .cart-drawer.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-cream);
+        }
+
+        .cart-header h3 {
+            color: var(--primary-brown);
+            font-size: 1.25rem;
+        }
+
+        .close-cart-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .cart-body {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .cart-empty {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 3rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-item-info h5 {
+            color: var(--primary-brown);
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .cart-item-info p {
+            color: var(--olive-green);
+            font-weight: 700;
+            font-size: 0.88rem;
+        }
+
+        .cart-qty-ctrl {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--bg-cream);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 0.2rem 0.5rem;
+        }
+
+        .qty-btn {
+            background: none;
+            border: none;
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary-brown);
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #c0392b;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-left: 0.5rem;
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-cream);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-brown);
+            margin-bottom: 1rem;
+        }
+
+        /* Library & Space */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .card-box {
+            background-color: var(--surface-cream);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+
+        .card-box h4 {
+            font-size: 1.4rem;
+            color: var(--primary-brown);
+            margin-bottom: 1rem;
+        }
+
+        .card-box ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .card-box li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Booking Section */
+        .booking-container {
+            background-color: var(--surface-cream);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            padding: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-brown);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-cream);
+            font-family: inherit;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .notice-box {
+            background-color: rgba(110, 71, 59, 0.08);
+            border-left: 4px solid var(--light-brown);
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-brown);
+            color: var(--bg-cream);
+            padding: 3rem 1.5rem 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 900px) {
+            .hero, .about-grid, .grid-2, .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#trang-chu" class="logo">
+                <div class="logo-icon">B</div>
+                <div class="logo-text">
+                    <h1>Book & Bean</h1>
+                    <span>book-and-bean-coffee</span>
+                </div>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#trang-chu">Trang chủ</a></li>
+                <li><a href="#gioi-thieu">Giới thiệu</a></li>
+                <li><a href="#thuc-don">Thực đơn</a></li>
+                <li><a href="#thu-vien">Sách & Không gian</a></li>
+                <li><a href="#dat-ban">Đặt bàn</a></li>
+                <li><a href="#lien-he">Liên hệ</a></li>
+            </ul>
+
+            <div class="header-actions">
+                <div class="cart-btn-wrapper">
+                    <button class="cart-btn" onclick="openCart()">
+                        🛒 <span>Giỏ hàng</span>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </button>
+                </div>
+                <a href="#dat-ban" class="btn-primary">Đặt bàn ngay</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Slide-in Cart Drawer Overlay & Body -->
+    <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3>Giỏ hàng của bạn</h3>
+            <button class="close-cart-btn" onclick="closeCart()">✕</button>
+        </div>
+        <div class="cart-body" id="cart-items-container">
+            <!-- Items rendered via JS -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Tổng tiền:</span>
+                <span id="cart-total-price">0 đ</span>
+            </div>
+            <button class="btn-primary" style="width: 100%; text-align: center;" onclick="checkout()">Thanh toán & Gửi đơn</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="trang-chu" class="hero">
+        <div class="hero-content">
+            <span class="badge-verified">Cà phê & Thư viện sách O2O Phổ Yên</span>
+            <h2>Không gian lắng đọng & Cà phê đậm vị</h2>
+            <p class="hero-subtitle">Nơi kết nối tri thức, công việc và sự yên bình</p>
+            <p class="hero-description">Book & Bean Coffee mang đến sự kết hợp hoàn hảo giữa không gian đọc sách yên tĩnh, khu vực làm việc sáng tạo và những tách cà phê thơm ngon.</p>
+            <div class="hero-actions">
+                <a href="#thuc-don" class="btn-primary">Khám phá Thực đơn</a>
+                <a href="#dat-ban" class="btn-outline">Đặt chỗ trước</a>
+            </div>
+        </div>
+        <div class="hero-banner">
+            <div class="hero-banner-inner">
+                <h3>Book & Bean Coffee</h3>
+                <p>book-and-bean-coffee</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="gioi-thieu">
+        <div class="section-title">
+            <p>Câu chuyện thương hiệu</p>
+            <h3>Về Book & Bean Coffee</h3>
+        </div>
+        <div class="about-grid">
+            <div class="about-text">
+                <span class="badge-verified">Mô hình Cà phê Sách O2O</span>
+                <p><strong>Book & Bean Coffee</strong> được định hình như một mô hình trải nghiệm đa nền tảng (O2O), gắn kết không gian quán cà phê thực tế với các tiện ích trực tuyến.</p>
+                <p>Chúng tôi tập trung tạo dựng một môi trường làm việc sáng tạo và đọc sách yên tĩnh tại Phổ Yên, Thái Nguyên.</p>
+            </div>
+            <div class="card-box">
+                <h4>Giá trị cốt lõi</h4>
+                <ul>
+                    <li><span>Cà phê đậm vị chuẩn chất lượng</span><strong>Chất lượng</strong></li>
+                    <li><span>Không gian làm việc & đọc sách</span><strong>Yên tĩnh</strong></li>
+                    <li><span>Tủ sách tuyển chọn đa dạng</span><strong>Tri thức</strong></li>
+                    <li><span>Trải nghiệm trực tuyến tiện lợi</span><strong>O2O</strong></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="thuc-don">
+        <div class="section-title">
+            <p>Bảng giá & Sản phẩm</p>
+            <h3>Thực đơn Đặc trưng</h3>
+        </div>
+
+        <div class="menu-controls">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Tìm kiếm món ăn, đồ uống (vd: Espresso, Sữa đá, Combo)..." oninput="handleSearch()">
+            </div>
+            <div class="menu-tabs">
+                <button class="tab-btn active" onclick="filterMenu('all', this)">Tất cả</button>
+                <button class="tab-btn" onclick="filterMenu('vietnam', this)">Cà phê Việt</button>
+                <button class="tab-btn" onclick="filterMenu('machine', this)">Cà phê Máy</button>
+                <button class="tab-btn" onclick="filterMenu('combo', this)">Combo Tiết kiệm</button>
+            </div>
+        </div>
+
+        <div class="menu-grid" id="menu-items">
+            <!-- Items rendered via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Library & Space Section -->
+    <section id="thu-vien">
+        <div class="section-title">
+            <p>Không gian & Thư viện</p>
+            <h3>Sách & Khu vực Làm việc</h3>
+        </div>
+        <div class="grid-2">
+            <div class="card-box">
+                <h4>📚 Thư viện sách tuyển chọn</h4>
+                <p>Bộ sưu tập sách phong phú đa dạng thể loại phục vụ bạn đọc tại chỗ:</p>
+                <ul>
+                    <li><span>Kinh doanh & Khởi nghiệp</span><strong>Nổi bật</strong></li>
+                    <li><span>Văn học & Tiểu thuyết</span><strong>Cập nhật</strong></li>
+                    <li><span>Phát triển bản thân</span><strong>Đa dạng</strong></li>
+                    <li><span>Đọc sách tại chỗ</span><strong>Miễn phí</strong></li>
+                </ul>
+            </div>
+            <div class="card-box">
+                <h4>☕ Không gian Trải nghiệm</h4>
+                <p>Tối ưu cho từng nhu cầu cá nhân và nhóm làm việc:</p>
+                <ul>
+                    <li><span>Góc đọc sách cá nhân</span><strong>Yên tĩnh</strong></li>
+                    <li><span>Khu vực học tập & làm việc</span><strong>Wifi High-speed</strong></li>
+                    <li><span>Bàn nhóm thảo luận</span><strong>Ấm cúng</strong></li>
+                    <li><span>Âm nhạc Lofi nhẹ nhàng</span><strong>Thư giãn</strong></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="dat-ban">
+        <div class="section-title">
+            <p>Trải nghiệm trực tuyến</p>
+            <h3>Đặt chỗ trước</h3>
+        </div>
+        <div class="booking-container">
+            <form onsubmit="handleBooking(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <input type="text" required placeholder="Nguyễn Văn A">
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="tel" required placeholder="098x xxx xxx">
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày đặt</label>
+                        <input type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Giờ đến</label>
+                        <input type="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Số lượng khách</label>
+                        <select>
+                            <option>1 người (Cá nhân)</option>
+                            <option>2 người</option>
+                            <option>3 - 5 người (Nhóm nhỏ)</option>
+                            <option>Trên 5 người (Nhóm lớn)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Khu vực ưu tiên</label>
+                        <select>
+                            <option>Khu vực đọc sách yên tĩnh</option>
+                            <option>Khu vực học tập & làm việc</option>
+                            <option>Khu vực bàn thảo luận</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Ghi chú thêm</label>
+                        <textarea rows="3" placeholder="Yêu cầu đặc biệt về chỗ ngồi hoặc đồ uống..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Gửi yêu cầu đặt bàn</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="lien-he">
+        <div class="section-title">
+            <p>Thông tin liên lạc</p>
+            <h3>Kết nối với Book & Bean</h3>
+        </div>
+        <div class="contact-grid">
+            <div class="card-box">
+                <h4>Thông tin cửa hàng</h4>
+                <p><strong>Định danh thương hiệu:</strong> book-and-bean-coffee</p>
+                <p><strong>Khu vực hoạt động:</strong> Phổ Yên, Thái Nguyên</p>
+                <p><strong>Hotline:</strong> Đang cập nhật xác nhận</p>
+                <div class="notice-box">
+                    📌 <strong>Lưu ý xác thực dữ liệu:</strong> Địa chỉ cụ thể, hotline và giờ mở cửa chính thức sẽ được cập nhật hoàn chỉnh khi quán đi vào vận hành thực tế.
+                </div>
+            </div>
+            <div class="card-box">
+                <h4>Phương thức thanh toán</h4>
+                <ul>
+                    <li><span>Tiền mặt tại quán</span><strong>Tiền mặt</strong></li>
+                    <li><span>Chuyển khoản Ngân hàng QR</span><strong>Banking</strong></li>
+                    <li><span>Ví điện tử Momo / ZaloPay</span><strong>Ví điện tử</strong></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h3>Book & Bean Coffee</h3>
+                <p style="margin-top: 0.5rem; opacity: 0.8;">Cà phê đậm vị - Sách truyền cảm hứng. Trải nghiệm O2O độc đáo tại Phổ Yên.</p>
+            </div>
+            <div>
+                <h4>Đường dẫn nhanh</h4>
+                <ul style="list-style: none; margin-top: 0.5rem; opacity: 0.8; line-height: 2;">
+                    <li><a href="#trang-chu" style="color: inherit; text-decoration: none;">Trang chủ</a></li>
+                    <li><a href="#thuc-don" style="color: inherit; text-decoration: none;">Thực đơn</a></li>
+                    <li><a href="#dat-ban" style="color: inherit; text-decoration: none;">Đặt bàn</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Link hệ thống</h4>
+                <p style="margin-top: 0.5rem; opacity: 0.8;">URL: <strong>book-and-bean-coffee</strong></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Book & Bean Coffee (book-and-bean-coffee). Bản quyền trang web demo trải nghiệm.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const menuData = [
+            { id: 1, name: "Cà phê Đen Truyền Thống", category: "vietnam", price: 35000, desc: "Cà phê đậm đà chuẩn vị truyền thống Việt Nam." },
+            { id: 2, name: "Cà phê Sữa Đá", category: "vietnam", price: 39000, desc: "Hòa quyện giữa vị đắng đậm và sữa đặc ngọt ngào." },
+            { id: 3, name: "Bạc Xỉu Phổ Yên", category: "vietnam", price: 49000, desc: "Nhiều sữa ít cà phê, hương vị dịu nhẹ êm ái." },
+            { id: 4, name: "Espresso Single Shot", category: "machine", price: 45000, desc: "Cà phê chiết xuất máy áp suất chuẩn Ý." },
+            { id: 5, name: "Cappuccino Kem Béo", category: "machine", price: 59000, desc: "Lớp bọt sữa mịn màng cùng hương espresso nồng nàn." },
+            { id: 6, name: "Latte Hạnh Nhân", category: "machine", price: 65000, desc: "Cà phê máy kết hợp vị hạnh nhân bùi béo." },
+            { id: 7, name: "Combo Đọc Sách Cá Nhân", category: "combo", price: 65000, desc: "1 Cà phê Việt bất kỳ + 1 Bánh ngọt tự chọn." },
+            { id: 8, name: "Combo Thư Giãn & Tri Thức", category: "combo", price: 89000, desc: "1 Cà phê Máy + 1 Bánh + Dịch vụ ưu tiên đọc sách." }
+        ];
+
+        let cart = [];
+        let currentCategory = 'all';
+
+        function renderMenu() {
+            const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            const container = document.getElementById('menu-items');
+
+            const filteredItems = menuData.filter(item => {
+                const matchCategory = (currentCategory === 'all' || item.category === currentCategory);
+                const matchSearch = item.name.toLowerCase().includes(searchQuery) || item.desc.toLowerCase().includes(searchQuery);
+                return matchCategory && matchSearch;
+            });
+
+            if (filteredItems.length === 0) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-muted);">Không tìm thấy món phù hợp với từ khóa "${searchQuery}"</div>`;
+                return;
+            }
+
+            container.innerHTML = filteredItems.map(item => `
+                <div class="menu-card">
+                    <div>
+                        <h4>${item.name}</h4>
+                        <div class="price">${item.price.toLocaleString('vi-VN')} đ</div>
+                        <p>${item.desc}</p>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart(${item.id})">+ Thêm vào giỏ</button>
+                </div>
+            `).join('');
+        }
+
+        function filterMenu(category, element) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            currentCategory = category;
+            renderMenu();
+        }
+
+        function handleSearch() {
+            renderMenu();
+        }
+
+        /* Cart Management Functions */
+        function addToCart(id) {
+            const existingItem = cart.find(i => i.id === id);
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                const menuItem = menuData.find(i => i.id === id);
+                cart.push({ ...menuItem, qty: 1 });
+            }
+            updateCartUI();
+            openCart();
+        }
+
+        function updateQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            document.getElementById('cart-count').innerText = totalQty;
+            document.getElementById('cart-total-price').innerText = totalPrice.toLocaleString('vi-VN') + ' đ';
+
+            const container = document.getElementById('cart-items-container');
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="cart-empty"><p>Giỏ hàng của bạn chưa có món nào.</p></div>';
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <h5>${item.name}</h5>
+                            <p>${(item.price * item.qty).toLocaleString('vi-VN')} đ</p>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div class="cart-qty-ctrl">
+                                <button class="qty-btn" onclick="updateQty(${item.id}, -1)">-</button>
+                                <span>${item.qty}</span>
+                                <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+                            </div>
+                            <button class="remove-btn" onclick="removeFromCart(${item.id})">✕</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function openCart() {
+            document.getElementById('cart-overlay').classList.add('active');
+            document.getElementById('cart-drawer').classList.add('active');
+        }
+
+        function closeCart() {
+            document.getElementById('cart-overlay').classList.remove('active');
+            document.getElementById('cart-drawer').classList.remove('active');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Giỏ hàng đang trống!');
+                return;
+            }
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            alert(`Cảm ơn bạn đã đặt hàng tại Book & Bean Coffee (book-and-bean-coffee)!\n\nTổng giá trị đơn hàng: ${totalPrice.toLocaleString('vi-VN')} VNĐ.\nChúng tôi sẽ liên hệ xác nhận trong ít phút.`);
+            cart = [];
+            updateCartUI();
+            closeCart();
+        }
+
+        function handleBooking(e) {
+            e.preventDefault();
+            alert("Cảm ơn bạn đã gửi yêu cầu đặt bàn tại Book & Bean Coffee! Chúng tôi sẽ liên hệ xác nhận trong thời gian sớm nhất.");
+        }
+
+        // Initialize Render
+        renderMenu();
+        updateCartUI();
+    </script>
+</body>
+</html>
