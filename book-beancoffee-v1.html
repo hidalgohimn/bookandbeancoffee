@@ -1,0 +1,2566 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="kiln">
+  <title>Book &amp; Bean Coffee — book&amp;beancoffee | Quán Cà Phê Sách &amp; Không Gian Đọc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Nền kem ấm áp */
+      --background: #f7f2e8;
+      --surface-container-low: #efe8d8;
+      --surface-container: #e6dcc8;
+      --surface-container-high: #dad0ba;
+      --surface-elevated: #fcf9f2;
+
+      /* Chữ nâu cà phê */
+      --on-surface: #2d1e14;
+      --on-surface-variant: #5e493a;
+
+      /* Đường viền & phân cách */
+      --outline: #3f2b1d;
+      --outline-variant: #d4c8b2;
+
+      /* Điểm nhấn: Nâu cà phê & Xanh ô-liu */
+      --primary: #4a3222;
+      --on-primary: #fbf7ef;
+      --primary-container: #e7dbc7;
+      --on-primary-container: #2d1e14;
+      --secondary: #536236;
+      --on-secondary: #fbf7ef;
+      --secondary-container: #e3e8d5;
+      --on-secondary-container: #333e1f;
+      --tertiary: #8c4427;
+      --on-tertiary: #fbf7ef;
+
+      /* Trạng thái ngữ nghĩa */
+      --positive: #4b6132;
+      --warning: #9c661f;
+      --error: #9e2f26;
+      --on-error: #fbf7ef;
+      --focus: #536236;
+
+      /* Bảng màu đồ họa & bản đồ */
+      --data-1: #536236;
+      --data-2: #4a3222;
+      --data-3: #8c4427;
+      --data-4: #a8875a;
+      --data-context: #c9bda6;
+
+      /* Phông chữ chuẩn tiếng Việt */
+      --font-headline: 'Newsreader', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-label: 'JetBrains Mono', monospace;
+
+      /* Bo góc tối giản */
+      --rounded: 0.25rem;
+      --rounded-lg: 0.5rem;
+      --rounded-full: 9999px;
+
+      /* Hiệu ứng phong cách Kiln ấm áp */
+      --rule-olive-left: 3px solid var(--secondary);
+      --rule-coffee-left: 2px solid var(--outline);
+      --rule-linen: 1px solid var(--outline-variant);
+      --shadow-soft: 0 6px 24px rgb(45 30 20 / 0.07);
+      --shadow-hover: 0 10px 30px rgb(45 30 20 / 0.11);
+      --label-tracking: 0.08em;
+
+      /* Thang kích thước chữ */
+      --display-size: clamp(2.15rem, 1.4rem + 3vw, 3.6rem);
+      --headline-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.25rem);
+      --subhead-size: clamp(1.125rem, 1.02rem + 0.4vw, 1.35rem);
+      --body-size: clamp(1rem, 0.96rem + 0.12vw, 1.0625rem);
+      --label-size: 0.75rem;
+
+      /* Thang khoảng cách (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 5.5rem;
+
+      /* Chuyển động */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 140ms;
+      --dur-short: 240ms;
+      --dur-long: 420ms;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+    button, input, select, textarea { font-family: inherit; }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Thanh điều hướng đầu trang (tĩnh, tối giản, đáp ứng mọi kích thước) */
+    .site-header {
+      border-bottom: var(--rule-linen);
+      background-color: var(--surface-elevated);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      text-decoration: none;
+      color: var(--on-surface);
+    }
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--rounded);
+      background-color: var(--primary);
+      color: var(--on-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .brand-name {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--on-surface);
+    }
+    .brand-url-pill {
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      color: var(--secondary);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .main-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .nav-link {
+      color: var(--on-surface-variant);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: var(--space-sm) var(--space-sm);
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: var(--rounded);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .nav-link:hover {
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .cart-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--secondary-container);
+      color: var(--on-secondary-container);
+      border: 1px solid var(--secondary);
+      border-radius: var(--rounded);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .cart-pill-btn:hover {
+      background-color: var(--secondary);
+      color: var(--on-secondary);
+    }
+    .cart-count-badge {
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: var(--rounded-full);
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    /* Khung trang chính */
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2xl);
+      padding: var(--space-xl) var(--space-lg) var(--space-3xl);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Nhãn & Tiêu đề chung */
+    .section-block {
+      padding-top: var(--space-xl);
+      border-top: var(--rule-linen);
+    }
+    .section-block.no-top-rule {
+      padding-top: 0;
+      border-top: none;
+    }
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+    .section-kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: var(--label-tracking);
+      color: var(--secondary);
+      margin: 0 0 var(--space-xs) 0;
+    }
+    .section-title {
+      font-family: var(--font-headline);
+      font-weight: 500;
+      font-size: var(--headline-size);
+      line-height: 1.15;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .section-lede {
+      font-size: var(--body-size);
+      color: var(--on-surface-variant);
+      max-width: 65ch;
+      margin: var(--space-sm) 0 0 0;
+    }
+
+    /* Nút bấm */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg);
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border: 1px solid var(--primary);
+      border-radius: var(--rounded);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .btn-primary:hover {
+      background-color: var(--outline);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      border: 1px solid var(--outline);
+      border-radius: var(--rounded);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .btn-secondary:hover {
+      background-color: var(--surface-container);
+    }
+    .btn-olive {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--secondary);
+      color: var(--on-secondary);
+      border: 1px solid var(--secondary);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity var(--dur-micro) var(--ease-out);
+    }
+    .btn-olive:hover { opacity: 0.92; }
+
+    /* 1. TRANG CHỦ / HERO */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+      gap: var(--space-xl);
+      align-items: center;
+    }
+    .hero-copy-col {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .hero-top-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .seal-stamp {
+      border: 1px solid var(--tertiary);
+      color: var(--tertiary);
+      font-family: var(--font-label);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      padding: var(--space-sm) var(--space-xs);
+      writing-mode: vertical-rl;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      background-color: var(--surface-elevated);
+    }
+    .hero-address-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-xs) var(--space-md);
+      background-color: var(--surface-container-low);
+      border-left: var(--rule-olive-left);
+      border-radius: var(--rounded);
+      font-family: var(--font-label);
+      font-size: 0.8125rem;
+      color: var(--on-surface);
+      width: fit-content;
+    }
+    .hero-display {
+      font-family: var(--font-headline);
+      font-weight: 500;
+      font-size: var(--display-size);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .hero-slogan {
+      font-family: var(--font-headline);
+      font-style: italic;
+      font-size: var(--subhead-size);
+      color: var(--secondary);
+      margin: 0;
+    }
+    .hero-desc {
+      max-width: 60ch;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-top: var(--space-sm);
+    }
+    .hero-banner-card {
+      background-color: var(--surface-container-low);
+      border: var(--rule-linen);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      box-shadow: var(--shadow-soft);
+    }
+    .hero-banner-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--rounded);
+    }
+    .hero-banner-caption {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-top: var(--space-sm);
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Washi spine cards (chỉ số cốt lõi) */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      gap: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+    .washi-card {
+      background-color: var(--surface-container-low);
+      border-left: var(--rule-coffee-left);
+      border-radius: var(--rounded);
+      padding: var(--space-lg);
+    }
+    .washi-card.olive-spine {
+      border-left: var(--rule-olive-left);
+    }
+    .washi-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: var(--label-tracking);
+      color: var(--secondary);
+      margin: 0 0 var(--space-xs) 0;
+    }
+    .washi-value {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.75rem;
+      line-height: 1.2;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-xs) 0;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    .washi-note {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    /* 2. GIỚI THIỆU */
+    .story-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: var(--space-xl);
+      align-items: start;
+    }
+    .story-prose {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      max-width: 65ch;
+    }
+    .story-prose p { margin: 0; }
+    .story-quote {
+      margin: var(--space-sm) 0;
+      padding: var(--space-md) var(--space-lg);
+      background-color: var(--secondary-container);
+      color: var(--on-secondary-container);
+      border-left: var(--rule-olive-left);
+      border-radius: var(--rounded);
+      font-family: var(--font-headline);
+      font-size: 1.125rem;
+      line-height: 1.5;
+    }
+    .pillars-stack {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-md);
+    }
+    .pillar-card {
+      background-color: var(--surface-elevated);
+      border: var(--rule-linen);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+    }
+    .pillar-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-xs) 0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .pillar-desc {
+      font-size: 0.9375rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    /* 3. THỰC ĐƠN & GIỎ HÀNG */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+    .filter-btn {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      border: var(--rule-linen);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .filter-btn:hover {
+      background-color: var(--surface-container);
+    }
+    .filter-btn.is-active {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    .menu-workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.9fr);
+      gap: var(--space-xl);
+      align-items: start;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .menu-item-card {
+      background-color: var(--surface-elevated);
+      border: var(--rule-linen);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-md);
+      transition: box-shadow var(--dur-short) var(--ease-out);
+    }
+    .menu-item-card:hover {
+      box-shadow: var(--shadow-soft);
+    }
+    .menu-item-card.is-signature {
+      border-left: var(--rule-olive-left);
+    }
+    .menu-cat-tag {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: var(--label-tracking);
+      color: var(--secondary);
+      margin-bottom: var(--space-xs);
+    }
+    .menu-item-name {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-xs) 0;
+    }
+    .menu-item-desc {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+    .menu-item-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-top: var(--space-sm);
+      border-top: var(--rule-linen);
+    }
+    .menu-price {
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .add-item-btn {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      background-color: var(--secondary-container);
+      color: var(--on-secondary-container);
+      border: 1px solid var(--secondary);
+      border-radius: var(--rounded);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .add-item-btn:hover {
+      background-color: var(--secondary);
+      color: var(--on-secondary);
+    }
+
+    /* Giỏ hàng */
+    .cart-panel {
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--rule-linen);
+    }
+    .cart-title {
+      font-family: var(--font-headline);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .cart-clear-btn {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      background: transparent;
+      border: none;
+      color: var(--tertiary);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .cart-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      max-height: 320px;
+      overflow-y: auto;
+    }
+    .cart-empty {
+      padding: var(--space-lg);
+      text-align: center;
+      background-color: var(--surface-elevated);
+      border: var(--rule-linen);
+      border-radius: var(--rounded);
+      color: var(--on-surface-variant);
+      font-size: 0.9rem;
+    }
+    .cart-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-sm);
+      align-items: center;
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--surface-elevated);
+      border: var(--rule-linen);
+      border-radius: var(--rounded);
+    }
+    .cart-row-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--on-surface);
+    }
+    .cart-row-sub {
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      color: var(--on-surface-variant);
+    }
+    .qty-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .qty-btn {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      border: var(--rule-linen);
+      border-radius: var(--rounded);
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qty-btn:hover { background-color: var(--surface-container-high); }
+    .qty-val {
+      font-family: var(--font-label);
+      font-size: 0.875rem;
+      min-width: 24px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .cart-summary {
+      padding-top: var(--space-sm);
+      border-top: var(--rule-linen);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      font-size: 0.9rem;
+    }
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      color: var(--on-surface-variant);
+    }
+    .summary-line.total {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--on-surface);
+      padding-top: var(--space-xs);
+      border-top: var(--rule-linen);
+    }
+    .promo-note {
+      font-size: 0.8125rem;
+      color: var(--secondary);
+      background-color: var(--secondary-container);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+    }
+
+    /* Form controls chung (label hiển thị phía trên) */
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .form-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--surface-elevated);
+      color: var(--on-surface);
+      border: 1px solid var(--outline);
+      border-radius: var(--rounded);
+      font-size: 0.9375rem;
+    }
+    .form-select { padding-right: 2rem; }
+    .form-textarea { min-height: 84px; resize: vertical; }
+
+    .inline-feedback {
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      display: none;
+    }
+    .inline-feedback.is-visible { display: block; }
+    .inline-feedback.is-success {
+      background-color: var(--secondary-container);
+      color: var(--on-secondary-container);
+      border-left: var(--rule-olive-left);
+    }
+    .inline-feedback.is-error {
+      background-color: var(--primary-container);
+      color: var(--error);
+      border-left: 3px solid var(--error);
+    }
+
+    /* 4. THƯ VIỆN SÁCH */
+    .library-controls {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: end;
+      margin-bottom: var(--space-lg);
+    }
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(265px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .book-card {
+      background-color: var(--surface-elevated);
+      border: var(--rule-linen);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .book-code-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .book-shelf-code {
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      background-color: var(--surface-container-low);
+      border: var(--rule-linen);
+      border-radius: var(--rounded);
+      color: var(--primary);
+    }
+    .book-genre-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--secondary);
+    }
+    .book-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.15rem;
+      margin: var(--space-xs) 0;
+      color: var(--on-surface);
+    }
+    .book-author {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      margin: 0 0 var(--space-sm) 0;
+    }
+    .book-summary {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+    .book-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-top: var(--space-sm);
+      border-top: var(--rule-linen);
+      font-size: 0.8125rem;
+    }
+
+    .reading-services-band {
+      margin-top: var(--space-xl);
+      background-color: var(--surface-container-low);
+      border-left: var(--rule-olive-left);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+
+    /* 5. KHÔNG GIAN & SƠ ĐỒ MẶT BẰNG */
+    .space-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: var(--space-xl);
+      align-items: start;
+    }
+    .floorplan-card {
+      background-color: var(--surface-elevated);
+      border: var(--rule-linen);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+    }
+    .floor-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .floor-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      background-color: var(--background);
+      border: var(--rule-linen);
+      border-radius: var(--rounded);
+    }
+    .zone-rect {
+      cursor: pointer;
+      transition: opacity var(--dur-micro) var(--ease-out);
+    }
+    .zone-rect:hover { opacity: 0.86; }
+    .zone-detail-card {
+      background-color: var(--surface-container-low);
+      border-left: var(--rule-coffee-left);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .zone-specs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+    .spec-box {
+      background-color: var(--surface-elevated);
+      border: var(--rule-linen);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+    }
+    .spec-label {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--secondary);
+    }
+    .spec-val {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--on-surface);
+    }
+    .zones-list-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    .zone-mini-btn {
+      text-align: left;
+      padding: var(--space-md);
+      background-color: var(--surface-elevated);
+      border: var(--rule-linen);
+      border-radius: var(--rounded);
+      cursor: pointer;
+      min-height: 44px;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .zone-mini-btn:hover { background-color: var(--surface-container-low); }
+    .zone-mini-btn.is-active {
+      background-color: var(--secondary-container);
+      border-color: var(--secondary);
+    }
+
+    /* 6. ĐẶT BÀN TRỰC TUYẾN */
+    .booking-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: var(--space-xl);
+      align-items: start;
+    }
+    .booking-form-card {
+      background-color: var(--surface-elevated);
+      border: var(--rule-linen);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .booking-full { grid-column: 1 / -1; }
+    .booking-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .booking-ticket-card {
+      background-color: var(--surface-container-low);
+      border-left: var(--rule-olive-left);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+    }
+    .booking-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
+    }
+    .saved-booking-item {
+      background-color: var(--surface-elevated);
+      border: var(--rule-linen);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .booking-item-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .booking-code {
+      font-family: var(--font-label);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--secondary);
+    }
+
+    /* 7. LIÊN HỆ & BẢN ĐỒ */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: var(--space-xl);
+      align-items: start;
+    }
+    .contact-cards {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .contact-item {
+      background-color: var(--surface-elevated);
+      border: var(--rule-linen);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+    }
+    .contact-item-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin: 0 0 var(--space-xs) 0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      color: var(--on-surface);
+    }
+    .verification-notice {
+      background-color: var(--primary-container);
+      border-left: 4px solid var(--tertiary);
+      border-radius: var(--rounded);
+      padding: var(--space-lg);
+      color: var(--on-surface);
+      font-size: 0.9375rem;
+    }
+    .map-card {
+      background-color: var(--surface-elevated);
+      border: var(--rule-linen);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+    }
+    .map-container {
+      min-height: 320px;
+      width: 100%;
+    }
+    .map-svg {
+      width: 100%;
+      height: auto;
+      min-height: 300px;
+      display: block;
+      border-radius: var(--rounded);
+      border: var(--rule-linen);
+      background-color: var(--background);
+    }
+    .map-pin { cursor: pointer; }
+    .map-info-bar {
+      margin-top: var(--space-md);
+      padding: var(--space-md);
+      background-color: var(--surface-container-low);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+    }
+
+    /* Chân trang */
+    .site-footer {
+      border-top: var(--rule-linen);
+      background-color: var(--surface-container-low);
+      padding: var(--space-xl) var(--space-lg);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 960px) {
+      .hero-grid,
+      .story-layout,
+      .menu-workspace,
+      .space-layout,
+      .booking-grid,
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    @media (max-width: 640px) {
+      .header-inner { padding: var(--space-md); }
+      .page-grid { padding: var(--space-lg) var(--space-md) var(--space-2xl); gap: var(--space-xl); }
+      .booking-form-card { grid-template-columns: minmax(0, 1fr); padding: var(--space-lg); }
+      .library-controls { grid-template-columns: minmax(0, 1fr); }
+      .zone-specs { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#trang-chu" class="brand-lockup" aria-label="Trang chủ Book & Bean Coffee">
+        <span class="brand-mark" aria-hidden="true">
+          <i data-lucide="book-open-check"></i>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">Book &amp; Bean Coffee</span>
+          <span class="brand-url-pill">book&amp;beancoffee</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Điều hướng chính">
+        <a href="#trang-chu" class="nav-link">Trang chủ</a>
+        <a href="#gioi-thieu" class="nav-link">Giới thiệu</a>
+        <a href="#thuc-don" class="nav-link">Thực đơn</a>
+        <a href="#thu-vien-sach" class="nav-link">Thư viện sách</a>
+        <a href="#khong-gian" class="nav-link">Không gian</a>
+        <a href="#dat-ban" class="nav-link">Đặt bàn</a>
+        <a href="#lien-he" class="nav-link">Liên hệ</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="#gio-hang" class="cart-pill-btn">
+          <i data-lucide="shopping-bag" aria-hidden="true"></i>
+          <span>Giỏ hàng</span>
+          <span class="cart-count-badge" id="header-cart-count">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-grid">
+    <!-- 1. TRANG CHỦ -->
+    <section id="trang-chu" class="section-block no-top-rule">
+      <div class="hero-grid">
+        <div class="hero-copy-col">
+          <div class="hero-top-row">
+            <div class="hero-address-bar">
+              <i data-lucide="globe" aria-hidden="true"></i>
+              <span>Đường dẫn chính thức: <strong>book&amp;beancoffee</strong></span>
+            </div>
+            <div class="seal-stamp" aria-hidden="true">PHỔ YÊN · 2026</div>
+          </div>
+
+          <h1 class="hero-display">Book &amp; Bean Coffee</h1>
+          <p class="hero-slogan">“Sống chậm cùng trang sách, đong đầy vị cà phê”</p>
+          <p class="hero-desc">
+            Không gian cà phê sách hai tầng tại trung tâm thành phố Phổ Yên, tỉnh Thái Nguyên — nơi kết hợp hài hòa giữa ly cà phê rang mộc nguyên bản, hơn 1.800 đầu sách bản quyền chọn lọc và hệ thống đặt bàn, đặt món trực tuyến liền mạch trên nền tảng <strong>book&amp;beancoffee</strong>.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#thuc-don" class="btn-primary">
+              <i data-lucide="coffee" aria-hidden="true"></i>
+              <span>Khám phá thực đơn</span>
+            </a>
+            <a href="#dat-ban" class="btn-secondary">
+              <i data-lucide="calendar-check" aria-hidden="true"></i>
+              <span>Đặt bàn đọc sách</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-banner-card">
+          <svg class="hero-banner-svg" viewBox="0 0 640 440" role="img" aria-label="Minh họa không gian quán cà phê sách Book & Bean Coffee hai tầng với kệ sách, tách cà phê nóng và lá ô-liu">
+            <rect width="640" height="440" fill="var(--surface-elevated)" />
+            <!-- Nền mảng khối ấm áp -->
+            <rect x="24" y="24" width="592" height="392" rx="12" fill="var(--background)" stroke="var(--outline-variant)" stroke-width="1.5" />
+            <!-- Cửa vòm ánh nắng chiều -->
+            <path d="M 80 370 L 80 155 A 110 110 0 0 1 300 155 L 300 370 Z" fill="var(--secondary-container)" />
+            <path d="M 108 370 L 108 165 A 82 82 0 0 1 272 165 L 272 370 Z" fill="var(--surface-elevated)" />
+            <!-- Đường phân tầng gác lửng -->
+            <line x1="80" y1="262" x2="300" y2="262" stroke="var(--outline)" stroke-width="2" />
+            <line x1="190" y1="60" x2="190" y2="370" stroke="var(--outline-variant)" stroke-width="1.5" />
+
+            <!-- Kệ sách cao bên phải -->
+            <rect x="336" y="64" width="236" height="306" rx="4" fill="var(--surface-container-low)" stroke="var(--outline)" stroke-width="2" />
+            <line x1="336" y1="140" x2="572" y2="140" stroke="var(--outline)" stroke-width="2" />
+            <line x1="336" y1="216" x2="572" y2="216" stroke="var(--outline)" stroke-width="2" />
+            <line x1="336" y1="292" x2="572" y2="292" stroke="var(--outline)" stroke-width="2" />
+
+            <!-- Các hàng sách trên kệ -->
+            <rect x="352" y="84" width="18" height="54" fill="var(--primary)" rx="2" />
+            <rect x="374" y="92" width="14" height="46" fill="var(--secondary)" rx="2" />
+            <rect x="392" y="80" width="20" height="58" fill="var(--tertiary)" rx="2" />
+            <rect x="416" y="90" width="16" height="48" fill="var(--data-4)" rx="2" />
+            <rect x="448" y="88" width="18" height="50" fill="var(--secondary)" rx="2" />
+            <rect x="470" y="96" width="15" height="42" fill="var(--primary)" rx="2" />
+            <rect x="498" y="84" width="24" height="54" fill="var(--tertiary)" rx="2" transform="rotate(-6 510 110)" />
+
+            <rect x="354" y="160" width="22" height="54" fill="var(--data-4)" rx="2" />
+            <rect x="380" y="168" width="15" height="46" fill="var(--primary)" rx="2" />
+            <rect x="412" y="158" width="18" height="56" fill="var(--secondary)" rx="2" />
+            <rect x="434" y="166" width="16" height="48" fill="var(--tertiary)" rx="2" />
+            <rect x="454" y="160" width="20" height="54" fill="var(--primary)" rx="2" />
+            <!-- Chậu cây ô-liu nhỏ trên kệ -->
+            <path d="M 508 194 L 542 194 L 536 214 L 514 214 Z" fill="var(--tertiary)" />
+            <path d="M 525 194 Q 512 174 504 166" stroke="var(--secondary)" stroke-width="2" fill="none" />
+            <ellipse cx="508" cy="172" rx="7" ry="4" fill="var(--secondary)" transform="rotate(-30 508 172)" />
+            <path d="M 525 194 Q 538 172 548 166" stroke="var(--secondary)" stroke-width="2" fill="none" />
+            <ellipse cx="542" cy="172" rx="7" ry="4" fill="var(--secondary)" transform="rotate(28 542 172)" />
+
+            <!-- Sách tầng 3 kệ -->
+            <rect x="354" y="238" width="16" height="52" fill="var(--secondary)" rx="2" />
+            <rect x="374" y="244" width="20" height="46" fill="var(--primary)" rx="2" />
+            <rect x="398" y="234" width="16" height="56" fill="var(--data-4)" rx="2" />
+            <rect x="444" y="274" width="66" height="16" fill="var(--primary)" rx="2" />
+            <rect x="450" y="258" width="56" height="16" fill="var(--secondary)" rx="2" />
+
+            <!-- Bàn gỗ đọc sách & Tách cà phê bốc khói -->
+            <rect x="64" y="344" width="256" height="14" rx="4" fill="var(--primary)" />
+            <rect x="92" y="358" width="12" height="44" fill="var(--outline)" />
+            <rect x="282" y="358" width="12" height="44" fill="var(--outline)" />
+
+            <!-- Quyển sách mở trên bàn -->
+            <path d="M 104 344 Q 146 332 178 344 L 178 320 Q 146 308 104 320 Z" fill="var(--surface-elevated)" stroke="var(--outline)" stroke-width="1.5" />
+            <path d="M 178 344 Q 212 332 252 344 L 252 320 Q 212 308 178 320 Z" fill="var(--surface-container-low)" stroke="var(--outline)" stroke-width="1.5" />
+
+            <!-- Tách cà phê và khói hương -->
+            <ellipse cx="282" cy="342" rx="26" ry="5" fill="var(--surface-container)" stroke="var(--outline)" stroke-width="1.5" />
+            <path d="M 264 316 L 300 316 L 294 341 L 270 341 Z" fill="var(--primary)" />
+            <path d="M 299 321 A 7 7 0 1 1 297 334" fill="none" stroke="var(--primary)" stroke-width="3" />
+            <path d="M 276 306 Q 270 294 278 282" fill="none" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round" />
+            <path d="M 288 308 Q 294 296 286 284" fill="none" stroke="var(--tertiary)" stroke-width="2" stroke-linecap="round" />
+
+            <!-- Đèn đọc sách cá nhân -->
+            <path d="M 118 344 L 118 286 L 146 270" fill="none" stroke="var(--outline)" stroke-width="3" stroke-linecap="round" />
+            <polygon points="140,264 164,274 152,286 134,276" fill="var(--secondary)" />
+            <polygon points="142,282 162,276 184,316 124,316" fill="var(--primary-container)" opacity="0.55" />
+          </svg>
+          <div class="hero-banner-caption">
+            <span>Không gian đọc 2 tầng · Phường Ba Hàng, TP. Phổ Yên</span>
+            <span>book&amp;beancoffee</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="metrics-grid">
+        <article class="washi-card olive-spine">
+          <p class="washi-label">Quy mô không gian</p>
+          <p class="washi-value">140 m² · 2 tầng</p>
+          <p class="washi-note">Tách biệt hoàn toàn khu thảo luận tầng 1 và khu đọc yên tĩnh tầng 2 (30–50 chỗ ngồi).</p>
+        </article>
+        <article class="washi-card">
+          <p class="washi-label">Thư viện bản quyền</p>
+          <p class="washi-value">1.800+ đầu sách</p>
+          <p class="washi-note">Sách chính hãng từ Nhã Nam, NXB Trẻ, Alpha Books, Thái Hà Books &amp; NXB Kim Đồng.</p>
+        </article>
+        <article class="washi-card olive-spine">
+          <p class="washi-label">Thực đơn hợp lý</p>
+          <p class="washi-value">35.000đ – 89.000đ</p>
+          <p class="washi-note">Cà phê rang mộc Cầu Đất – Đắk Lắk, trà trái cây, bánh ngọt và combo giờ đọc.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 2. GIỚI THIỆU -->
+    <section id="gioi-thieu" class="section-block">
+      <div class="section-header">
+        <div>
+          <p class="section-kicker">02 · Câu chuyện thương hiệu &amp; Triết lý vận hành</p>
+          <h2 class="section-title">Không gian thứ ba cho tri thức và hương vị cà phê nguyên bản</h2>
+        </div>
+      </div>
+
+      <div class="story-layout">
+        <div class="story-prose">
+          <p>
+            <strong>Book &amp; Bean Coffee</strong> ra đời từ một nhu cầu giản dị nhưng cấp thiết tại thành phố Phổ Yên, tỉnh Thái Nguyên: nơi có hơn 231.000 dân cùng hàng chục nghìn kỹ sư, chuyên gia tại Khu công nghiệp Yên Bình – Điềm Thụy và học sinh, sinh viên các trường cao đẳng. Các quán cà phê thông thường thường ồn ào và thiếu chỗ ngồi tập trung, trong khi nhà sách truyền thống lại không có không gian nán lại thưởng thức đồ uống.
+          </p>
+          <blockquote class="story-quote">
+            “Đánh thức cảm hứng tri thức trong từng tách cà phê nguyên bản — một tách cà phê thơm, một cuốn sách hay và một khoảng lặng đủ êm để nghỉ ngơi, học tập hoặc sáng tạo.”
+          </blockquote>
+          <p>
+            Tên gọi của thương hiệu gói trọn hai giá trị cốt lõi: <strong>Book</strong> tượng trưng cho tri thức và sự phát triển bản thân; <strong>Bean</strong> đại diện cho hạt cà phê rang mộc chuẩn vị từ vùng nguyên liệu Cầu Đất, Sơn La và Đắk Lắk. Toàn bộ hệ thống vận hành theo mô hình đa kênh O2O trên đường dẫn <strong>book&amp;beancoffee</strong>, cho phép khách hàng xem sơ đồ bàn trống theo thời gian thực, đặt đồ uống trước khi đến và mua sách bản quyền kèm cà phê đóng gói mang về.
+          </p>
+        </div>
+
+        <div class="pillars-stack">
+          <article class="pillar-card">
+            <h3 class="pillar-title">
+              <i data-lucide="volume-x" aria-hidden="true"></i>
+              <span>Phân vùng âm thanh ba lớp</span>
+            </h3>
+            <p class="pillar-desc">
+              Máy pha chế và khu trò chuyện được cách âm tự nhiên ở tầng 1, nhường toàn bộ tầng 2 cho khu đọc sách yên tĩnh tuyệt đối (Silent Reading Zone) với ánh sáng vàng dịu bảo vệ mắt.
+            </p>
+          </article>
+          <article class="pillar-card">
+            <h3 class="pillar-title">
+              <i data-lucide="award" aria-hidden="true"></i>
+              <span>Nguồn cung ứng chính ngạch</span>
+            </h3>
+            <p class="pillar-desc">
+              100% hạt cà phê đạt chuẩn VietGAP rang mộc không tẩm trộn; 100% xuất bản phẩm có hóa đơn chứng từ hợp pháp từ các nhà xuất bản và công ty phát hành uy tín.
+            </p>
+          </article>
+          <article class="pillar-card">
+            <h3 class="pillar-title">
+              <i data-lucide="qr-code" aria-hidden="true"></i>
+              <span>Trải nghiệm QR tại bàn đọc</span>
+            </h3>
+            <p class="pillar-desc">
+              Mỗi bàn đọc đều gắn mã QR giúp lưu lại trang sách đang đọc dở, gọi thêm đồ uống không gây tiếng ồn, hoặc đặt mua bản sách mới nguyên seal giao tận nhà qua book&amp;beancoffee.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. THỰC ĐƠN & GIỎ HÀNG -->
+    <section id="thuc-don" class="section-block">
+      <div class="section-header">
+        <div>
+          <p class="section-kicker">03 · Thực đơn đồ uống, bánh &amp; combo</p>
+          <h2 class="section-title">Chọn món yêu thích và chuẩn bị đơn tại book&amp;beancoffee</h2>
+          <p class="section-lede">
+            Giá bán được thiết kế trong phân khúc phổ thông đến trung cấp, phù hợp cho sinh viên, nhân viên văn phòng và kỹ sư khu công nghiệp.
+          </p>
+        </div>
+      </div>
+
+      <div class="filter-bar" role="group" aria-label="Lọc danh mục thực đơn">
+        <button type="button" class="filter-btn is-active" data-menu-cat="all" onclick="filterMenu('all')">Tất cả món</button>
+        <button type="button" class="filter-btn" data-menu-cat="Cà phê Việt" onclick="filterMenu('Cà phê Việt')">Cà phê Việt (35k–49k)</button>
+        <button type="button" class="filter-btn" data-menu-cat="Cà phê máy" onclick="filterMenu('Cà phê máy')">Cà phê máy (45k–65k)</button>
+        <button type="button" class="filter-btn" data-menu-cat="Combo" onclick="filterMenu('Combo')">Combo đọc sách (65k–89k)</button>
+        <button type="button" class="filter-btn" data-menu-cat="Trà & Bánh" onclick="filterMenu('Trà & Bánh')">Trà &amp; Bánh</button>
+      </div>
+
+      <div class="menu-workspace">
+        <div class="menu-grid" id="menu-grid">
+          <!-- Render động bằng JavaScript -->
+        </div>
+
+        <aside class="cart-panel" id="gio-hang" aria-label="Giỏ hàng của bạn">
+          <div class="cart-header">
+            <h3 class="cart-title">
+              <i data-lucide="shopping-bag" aria-hidden="true"></i>
+              <span>Giỏ hàng thử nghiệm</span>
+            </h3>
+            <button type="button" class="cart-clear-btn" onclick="clearCart()">Xóa hết</button>
+          </div>
+
+          <div class="cart-list" id="cart-items-container">
+            <!-- Render động -->
+          </div>
+
+          <div class="promo-note" id="cart-promo-note">
+            Đơn hàng từ 250.000đ được miễn phí giao nhận trong bán kính 5 km tại TP. Phổ Yên.
+          </div>
+
+          <div class="cart-summary">
+            <div class="summary-line">
+              <span>Tạm tính</span>
+              <span id="cart-subtotal">0đ</span>
+            </div>
+            <div class="summary-line">
+              <span>Ưu đãi giờ thấp điểm / Combo</span>
+              <span id="cart-discount">0đ</span>
+            </div>
+            <div class="summary-line total">
+              <span>Tổng thanh toán dự kiến</span>
+              <span id="cart-total">0đ</span>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="cart-payment-method" class="form-label">Phương thức thanh toán dự kiến</label>
+            <select id="cart-payment-method" class="form-select">
+              <option value="VietQR động (Napas 247)">Quét mã VietQR động (Napas 247)</option>
+              <option value="Ví điện tử MoMo / VNPay">Ví điện tử MoMo / VNPay</option>
+              <option value="Tiền mặt hoặc Thẻ POS tại quầy">Tiền mặt hoặc Thẻ POS tại quầy</option>
+              <option value="Thanh toán khi nhận hàng (COD)">Thanh toán khi nhận hàng (COD)</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="cart-order-note" class="form-label">Ghi chú món (độ ngọt, đá, hoặc mã bàn)</label>
+            <input type="text" id="cart-order-note" class="form-input" placeholder="Ví dụ: Ít đường, phục vụ tại bàn T2-04">
+          </div>
+
+          <button type="button" class="btn-primary" onclick="submitTestOrder()">
+            <i data-lucide="check-circle" aria-hidden="true"></i>
+            <span>Xác nhận đơn thử nghiệm</span>
+          </button>
+
+          <div class="inline-feedback" id="cart-feedback" role="status" aria-live="polite"></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 4. THƯ VIỆN SÁCH -->
+    <section id="thu-vien-sach" class="section-block">
+      <div class="section-header">
+        <div>
+          <p class="section-kicker">04 · Thư viện sách bản quyền</p>
+          <h2 class="section-title">Danh mục sách nổi bật và dịch vụ đọc sách tại chỗ</h2>
+          <p class="section-lede">
+            Hơn 1.800 đầu sách chọn lọc thuộc các chủ đề văn học, kinh doanh, kỹ năng sống, tâm lý học, lịch sử – khoa học và sách thiếu nhi. Độc giả được đọc miễn phí tại quán hoặc quét mã QR để đặt bản mới nguyên seal.
+          </p>
+        </div>
+      </div>
+
+      <div class="library-controls">
+        <div class="filter-bar" style="margin-bottom: 0;" role="group" aria-label="Lọc thể loại sách">
+          <button type="button" class="filter-btn is-active" data-book-genre="all" onclick="filterBooks('all')">Tất cả thể loại</button>
+          <button type="button" class="filter-btn" data-book-genre="Văn học" onclick="filterBooks('Văn học')">Văn học</button>
+          <button type="button" class="filter-btn" data-book-genre="Kỹ năng sống" onclick="filterBooks('Kỹ năng sống')">Kỹ năng sống</button>
+          <button type="button" class="filter-btn" data-book-genre="Kinh doanh" onclick="filterBooks('Kinh doanh')">Kinh doanh</button>
+          <button type="button" class="filter-btn" data-book-genre="Tâm lý" onclick="filterBooks('Tâm lý')">Tâm lý học</button>
+          <button type="button" class="filter-btn" data-book-genre="Thiếu nhi" onclick="filterBooks('Thiếu nhi')">Thiếu nhi</button>
+        </div>
+
+        <div class="form-field">
+          <label for="book-search-input" class="form-label">Tìm nhanh tên sách hoặc tác giả</label>
+          <input type="text" id="book-search-input" class="form-input" placeholder="Nhập từ khóa…" oninput="searchBooks(this.value)">
+        </div>
+      </div>
+
+      <div class="book-grid" id="book-grid">
+        <!-- Render động -->
+      </div>
+
+      <div class="reading-services-band">
+        <div>
+          <p class="washi-label">Đọc tại chỗ miễn phí</p>
+          <p class="washi-note">
+            Khách sử dụng đồ uống tại quán được đọc toàn bộ đầu sách trên kệ miễn phí. Trong giai đoạn đầu, sách thư viện chỉ phục vụ đọc tại chỗ nhằm giữ gìn chất lượng trang sách.
+          </p>
+        </div>
+        <div>
+          <p class="washi-label">Book &amp; Bean Pass</p>
+          <p class="washi-note">
+            Thẻ thành viên tích điểm theo hóa đơn, ưu đãi sinh nhật, quyền đăng ký Book Club hàng tháng, đổi sách cũ lấy sách mới và giao lưu tác giả quy mô nhỏ.
+          </p>
+        </div>
+        <div>
+          <p class="washi-label">Đặt mua sách mới qua QR</p>
+          <p class="washi-note">
+            Mỗi đầu sách trưng bày đều có mã QR dẫn tới trang sách mới nguyên seal trên <strong>book&amp;beancoffee</strong>, kèm tùy chọn gói cà phê phin giấy và đèn kẹp đọc sách.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. KHÔNG GIAN -->
+    <section id="khong-gian" class="section-block">
+      <div class="section-header">
+        <div>
+          <p class="section-kicker">05 · Không gian đọc sách, làm việc &amp; học tập (140 m²)</p>
+          <h2 class="section-title">Sơ đồ phân khu 2 tầng chuẩn hóa âm thanh và ánh sáng</h2>
+          <p class="section-lede">
+            Nhấp chọn từng phân khu trên sơ đồ hoặc danh sách bên dưới để xem diện tích định hướng, tiện ích ổ cắm, mức độ yên tĩnh và đặt chỗ trực tiếp.
+          </p>
+        </div>
+      </div>
+
+      <div class="space-layout">
+        <div class="floorplan-card">
+          <div class="floor-tabs" role="group" aria-label="Chọn tầng xem sơ đồ">
+            <button type="button" class="filter-btn is-active" id="tab-floor-2" onclick="switchFloor(2)">Tầng 2 · Khu Yên Tĩnh &amp; Học Tập</button>
+            <button type="button" class="filter-btn" id="tab-floor-1" onclick="switchFloor(1)">Tầng 1 · Pha Chế &amp; Thảo Luận</button>
+          </div>
+
+          <svg class="floor-svg" id="floorplan-svg" viewBox="0 0 560 360" role="img" aria-label="Sơ đồ phân khu chức năng mặt bằng 140 mét vuông">
+            <!-- Render động theo tầng đang chọn -->
+          </svg>
+        </div>
+
+        <div class="zone-detail-card" id="zone-detail-panel">
+          <!-- Render động thông tin phân khu -->
+        </div>
+      </div>
+
+      <div class="zones-list-grid" id="zones-quick-list">
+        <!-- Render động các nút chọn nhanh khu vực -->
+      </div>
+    </section>
+
+    <!-- 6. ĐẶT BÀN TRỰC TUYẾN -->
+    <section id="dat-ban" class="section-block">
+      <div class="section-header">
+        <div>
+          <p class="section-kicker">06 · Đặt bàn đọc sách trực tuyến</p>
+          <h2 class="section-title">Giữ trước vị trí yên tĩnh theo ngày, khung giờ và khu vực</h2>
+          <p class="section-lede">
+            Tránh tình trạng hết bàn vào giờ cao điểm cuối tuần. Hệ thống giữ chỗ trong 15 phút kể từ giờ hẹn và hỗ trợ đặt kèm đồ uống từ giỏ hàng.
+          </p>
+        </div>
+      </div>
+
+      <div class="booking-grid">
+        <form class="booking-form-card" id="booking-form" onsubmit="handleBookingSubmit(event)">
+          <div class="form-field">
+            <label for="booking-date" class="form-label">Ngày đến dự kiến</label>
+            <input type="date" id="booking-date" class="form-input" required>
+          </div>
+
+          <div class="form-field">
+            <label for="booking-time" class="form-label">Khung giờ sử dụng</label>
+            <select id="booking-time" class="form-select" required>
+              <option value="07:30 – 10:00 (Buổi sáng yên tĩnh)">07:30 – 10:00 (Buổi sáng yên tĩnh)</option>
+              <option value="10:00 – 13:00 (Buổi trưa)">10:00 – 13:00 (Buổi trưa)</option>
+              <option value="13:30 – 16:30 (Buổi chiều học tập)">13:30 – 16:30 (Buổi chiều học tập)</option>
+              <option value="16:30 – 19:30 (Chiều tối)">16:30 – 19:30 (Chiều tối)</option>
+              <option value="19:30 – 22:00 (Buổi tối đọc sách)">19:30 – 22:00 (Buổi tối đọc sách)</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="booking-guests" class="form-label">Số người</label>
+            <select id="booking-guests" class="form-select" required>
+              <option value="1 người (Bàn cá nhân)">1 người (Bàn cá nhân)</option>
+              <option value="2 người">2 người</option>
+              <option value="3 – 4 người (Nhóm nhỏ)">3 – 4 người (Nhóm nhỏ)</option>
+              <option value="5 – 6 người (Học nhóm)">5 – 6 người (Học nhóm)</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="booking-zone" class="form-label">Khu vực chỗ ngồi</label>
+            <select id="booking-zone" class="form-select" required>
+              <option value="Khu đọc sách yên tĩnh (Tầng 2 · 35 m²)">Khu đọc sách yên tĩnh (Tầng 2 · 35 m²)</option>
+              <option value="Khu học tập &amp; làm việc có ổ cắm (Tầng 2 · 25 m²)">Khu học tập &amp; làm việc có ổ cắm (Tầng 2 · 25 m²)</option>
+              <option value="Khu ngồi chung linh hoạt (Tầng 1 · 25 m²)">Khu ngồi chung linh hoạt (Tầng 1 · 25 m²)</option>
+              <option value="Khu thảo luận nhóm nhỏ (Tầng 1 · 15 m²)">Khu thảo luận nhóm nhỏ (Tầng 1 · 15 m²)</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="booking-name" class="form-label">Họ và tên người đặt</label>
+            <input type="text" id="booking-name" class="form-input" placeholder="Ví dụ: Nguyễn Minh Đức" required>
+          </div>
+
+          <div class="form-field">
+            <label for="booking-phone" class="form-label">Số điện thoại liên hệ</label>
+            <input type="tel" id="booking-phone" class="form-input" placeholder="Ví dụ: 09xx xxx xxx" required>
+          </div>
+
+          <div class="form-field booking-full">
+            <label for="booking-note" class="form-label">Ghi chú (sách muốn giữ đọc, nhu cầu ổ cắm hoặc đồ uống kèm)</label>
+            <textarea id="booking-note" class="form-textarea" placeholder="Ví dụ: Gần cửa sổ tầng 2, giữ giúp cuốn Đắc Nhân Tâm hoặc Cà phê Muối…"></textarea>
+          </div>
+
+          <div class="booking-full">
+            <button type="submit" class="btn-primary">
+              <i data-lucide="calendar-plus" aria-hidden="true"></i>
+              <span>Tạo phiếu giữ chỗ trực tuyến</span>
+            </button>
+          </div>
+
+          <div class="booking-full inline-feedback" id="booking-feedback" role="status" aria-live="polite"></div>
+        </form>
+
+        <aside class="booking-sidebar">
+          <div class="booking-ticket-card">
+            <p class="washi-label">Lịch đặt bàn đã lưu trên trình duyệt</p>
+            <p class="washi-note">
+              Phiếu giữ chỗ của bạn được lưu lại qua phiên làm việc của trang <strong>book&amp;beancoffee</strong> để tiện đối chiếu khi tới quán.
+            </p>
+            <div class="booking-list" id="saved-bookings-list">
+              <!-- Render động -->
+            </div>
+          </div>
+
+          <div class="washi-card">
+            <p class="washi-label">Quy tắc không gian đọc</p>
+            <p class="washi-note">
+              Tại khu đọc yên tĩnh tầng 2, vui lòng chuyển điện thoại sang chế độ im lặng, sử dụng tai nghe khi học trực tuyến và đặt sách lại đúng vị trí mã kệ sau khi đọc xong.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 7. LIÊN HỆ -->
+    <section id="lien-he" class="section-block">
+      <div class="section-header">
+        <div>
+          <p class="section-kicker">07 · Liên hệ, bản đồ khu vực &amp; lưu ý xác thực</p>
+          <h2 class="section-title">Kết nối với Book &amp; Bean Coffee tại TP. Phổ Yên</h2>
+          <p class="section-lede">
+            Địa chỉ truy cập hiển thị chính thức của thương hiệu là <strong>book&amp;beancoffee</strong>. Quý khách có thể xem sơ đồ vị trí dự kiến và các kênh liên lạc trực tuyến dưới đây.
+          </p>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-cards">
+          <article class="contact-item">
+            <h3 class="contact-item-title">
+              <i data-lucide="map-pin" aria-hidden="true"></i>
+              <span>Địa chỉ dự kiến &amp; Giờ mở cửa</span>
+            </h3>
+            <p class="pillar-desc">
+              <strong>Khu vực dự kiến:</strong> Trục trung tâm Phường Ba Hàng (đang khảo sát đối chiếu giữa tuyến Trường Chinh, Nguyễn Cấu và Phạm Văn Đồng), Thành phố Phổ Yên, Tỉnh Thái Nguyên.<br>
+              <strong>Giờ hoạt động dự kiến:</strong> 07:00 – 22:00 hằng ngày (kể cả cuối tuần).
+            </p>
+          </article>
+
+          <article class="contact-item">
+            <h3 class="contact-item-title">
+              <i data-lucide="share-2" aria-hidden="true"></i>
+              <span>Kênh truyền thông &amp; Thương mại điện tử</span>
+            </h3>
+            <p class="pillar-desc">
+              <strong>Website hiển thị chính thức:</strong> book&amp;beancoffee (bookandbeancoffee.vn)<br>
+              <strong>Facebook Fanpage:</strong> Book &amp; Bean Coffee – Cà Phê Sách Phổ Yên<br>
+              <strong>Zalo Official Account:</strong> Book &amp; Bean Coffee Phổ Yên (Đặt bàn &amp; CSKH)<br>
+              <strong>Kênh sàn TMĐT &amp; Giao nhanh:</strong> Shopee Mall · TikTok Shop (@bookandbeancoffee) · GrabFood · ShopeeFood
+            </p>
+          </article>
+
+          <div class="verification-notice" role="note">
+            <strong>Ghi chú cần xác thực thông tin trước khi vận hành chính thức:</strong>
+            Website này được xây dựng cho dự án lập kế hoạch kinh doanh <em>Book &amp; Bean Coffee</em> (Nhóm 05, Lớp D4-24, Khoa Dược, Trường Đại học Thành Đô). Các thông tin gồm: địa chỉ số nhà mặt bằng cụ thể sau khi chốt hợp đồng thuê tại phường Ba Hàng, số điện thoại hotline vận hành, mã số thuế pháp nhân, Giấy chứng nhận cơ sở đủ điều kiện An toàn thực phẩm và hồ sơ thông báo website thương mại điện tử với Bộ Công Thương <strong>cần được kiểm tra, cập nhật và xác thực chính thức</strong> trước khi khai trương thực tế.
+          </div>
+        </div>
+
+        <div class="map-card">
+          <p class="washi-label">Sơ đồ định vị khu vực Phổ Yên (nhấp vào điểm mốc để xem khoảng cách)</p>
+          <div class="map-container">
+            <svg class="map-svg" viewBox="0 0 540 340" role="img" aria-label="Sơ đồ vị trí Book & Bean Coffee tại Phường Ba Hàng, TP. Phổ Yên và các khu vực lân cận">
+              <rect width="540" height="340" fill="var(--background)" />
+              <!-- Vùng nền đô thị & khu công nghiệp -->
+              <rect x="20" y="20" width="500" height="300" rx="8" fill="var(--surface-elevated)" stroke="var(--outline-variant)" stroke-width="1.5" />
+              <rect x="330" y="42" width="168" height="108" rx="6" fill="var(--surface-container-low)" stroke="var(--outline-variant)" stroke-dasharray="4 4" />
+              <text x="414" y="64" text-anchor="middle" font-family="var(--font-label)" font-size="11" fill="var(--on-surface-variant)">KCN YÊN BÌNH</text>
+
+              <!-- Tuyến đường chính -->
+              <line x1="40" y1="210" x2="500" y2="120" stroke="var(--data-context)" stroke-width="10" stroke-linecap="round" />
+              <line x1="175" y1="36" x2="215" y2="306" stroke="var(--data-context)" stroke-width="8" stroke-linecap="round" />
+              <line x1="80" y1="275" x2="460" y2="255" stroke="var(--outline-variant)" stroke-width="5" stroke-linecap="round" />
+
+              <text x="112" y="185" font-family="var(--font-label)" font-size="10" fill="var(--on-surface-variant)" transform="rotate(-11 112 185)">Trục Trường Chinh / QL3</text>
+              <text x="184" y="88" font-family="var(--font-label)" font-size="10" fill="var(--on-surface-variant)" transform="rotate(81 184 88)">Đ. Nguyễn Cấu / Phạm Văn Đồng</text>
+
+              <!-- Vòng bán kính giao nhanh 5km -->
+              <circle cx="200" cy="180" r="95" fill="var(--secondary-container)" opacity="0.35" stroke="var(--secondary)" stroke-width="1.5" stroke-dasharray="5 5" />
+
+              <!-- Điểm mốc 1: Book & Bean Coffee -->
+              <g class="map-pin" onclick="selectLandmark('bbc')" tabindex="0" role="button" aria-label="Book & Bean Coffee Phường Ba Hàng">
+                <circle cx="200" cy="180" r="14" fill="var(--primary)" stroke="var(--on-primary)" stroke-width="2.5" />
+                <text x="200" y="184" text-anchor="middle" font-family="var(--font-label)" font-size="11" font-weight="700" fill="var(--on-primary)">B</text>
+                <rect x="132" y="198" width="136" height="22" rx="4" fill="var(--primary)" />
+                <text x="200" y="213" text-anchor="middle" font-family="var(--font-body)" font-size="11" font-weight="600" fill="var(--on-primary)">Book &amp; Bean Coffee</text>
+              </g>
+
+              <!-- Điểm mốc 2: KCN Yên Bình / Samsung -->
+              <g class="map-pin" onclick="selectLandmark('yenbinh')" tabindex="0" role="button" aria-label="KCN Yên Bình - Samsung SEVT">
+                <circle cx="412" cy="108" r="10" fill="var(--secondary)" stroke="var(--on-secondary)" stroke-width="2" />
+                <text x="412" y="132" text-anchor="middle" font-family="var(--font-body)" font-size="11" font-weight="600" fill="var(--on-surface)">Samsung / KCN Yên Bình</text>
+              </g>
+
+              <!-- Điểm mốc 3: Trường Cao đẳng & Khu dân cư -->
+              <g class="map-pin" onclick="selectLandmark('truonghoc')" tabindex="0" role="button" aria-label="Cụm Trường học & Chợ Phổ Yên">
+                <circle cx="105" cy="112" r="10" fill="var(--tertiary)" stroke="var(--on-tertiary)" stroke-width="2" />
+                <text x="105" y="136" text-anchor="middle" font-family="var(--font-body)" font-size="11" font-weight="600" fill="var(--on-surface)">Cụm Trường học &amp; Chợ</text>
+              </g>
+
+              <!-- Điểm mốc 4: KCN Điềm Thụy -->
+              <g class="map-pin" onclick="selectLandmark('diemthuy')" tabindex="0" role="button" aria-label="Cụm Công nghiệp Điềm Thụy">
+                <circle cx="385" cy="258" r="10" fill="var(--data-4)" stroke="var(--on-primary)" stroke-width="2" />
+                <text x="385" y="282" text-anchor="middle" font-family="var(--font-body)" font-size="11" font-weight="600" fill="var(--on-surface)">Hướng KCN Điềm Thụy</text>
+              </g>
+            </svg>
+          </div>
+          <div class="map-info-bar" id="map-landmark-info">
+            <strong>Book &amp; Bean Coffee (Trung tâm Ba Hàng, TP. Phổ Yên):</strong> Vùng phủ sóng giao thức uống nhanh trong bán kính 5 km; tiếp cận thuận tiện cho sinh viên, kỹ sư và cư dân thành phố.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>Book &amp; Bean Coffee</strong> · Đường dẫn chính thức: <span class="brand-url-pill">book&amp;beancoffee</span> · “Sống chậm cùng trang sách, đong đầy vị cà phê”
+      </div>
+      <div>
+        Dự án Thương mại Điện tử — TP. Phổ Yên, Thái Nguyên · Dữ liệu giao diện phục vụ trải nghiệm mô hình
+      </div>
+    </div>
+  </footer>
+
+  <api-shim></api-shim>
+  <script>
+    const MENU_ITEMS = [
+      {
+        id: `cf-den`,
+        category: `Cà phê Việt`,
+        name: `Cà phê Đen Đá`,
+        price: 35000,
+        desc: `Cà phê rang mộc phối trộn Cầu Đất & Đắk Lắk, pha phin truyền thống đậm hậu vị.`,
+        signature: false
+      },
+      {
+        id: `cf-nau`,
+        category: `Cà phê Việt`,
+        name: `Cà phê Nâu Đá`,
+        price: 39000,
+        desc: `Cân bằng giữa vị cà phê phin nguyên chất và sữa đặc béo dịu cho buổi sáng tập trung.`,
+        signature: false
+      },
+      {
+        id: `cf-bacxiu`,
+        category: `Cà phê Việt`,
+        name: `Bạc Xỉu Kem Sữa`,
+        price: 42000,
+        desc: `Thơm nhẹ mùi cà phê rang vừa, hòa quyện sữa tươi thanh mát, dễ uống khi đọc sách.`,
+        signature: false
+      },
+      {
+        id: `cf-muoi`,
+        category: `Cà phê Việt`,
+        name: `Cà phê Muối Phổ Yên`,
+        price: 49000,
+        desc: `Cốt cà phê phin đậm đà phủ lớp kem muối biển đánh bông mịn, hậu ngọt mặn hài hòa.`,
+        signature: true
+      },
+      {
+        id: `m-espresso`,
+        category: `Cà phê máy`,
+        name: `Espresso / Americano`,
+        price: 45000,
+        desc: `Chiết xuất áp suất chuẩn từ hạt Arabica Cầu Đất rang vừa, ít đắng, hương hoa quả nhẹ.`,
+        signature: false
+      },
+      {
+        id: `m-cappuccino`,
+        category: `Cà phê máy`,
+        name: `Cappuccino`,
+        price: 55000,
+        desc: `Espresso kết hợp bọt sữa mịn mượt, giữ nhiệt ổn định trong suốt giờ làm việc.`,
+        signature: false
+      },
+      {
+        id: `m-latte`,
+        category: `Cà phê máy`,
+        name: `Latte Nghệ Nhân`,
+        price: 58000,
+        desc: `Cân bằng dịu nhẹ giữa espresso và sữa tươi Dalatmilk thanh trùng.`,
+        signature: false
+      },
+      {
+        id: `m-signature`,
+        category: `Cà phê máy`,
+        name: `Book Latte / Bean Cold Brew`,
+        price: 65000,
+        desc: `Món đặc trưng của quán: Cold Brew ủ lạnh 16 giờ hoặc Book Latte hương quế ấm.`,
+        signature: true
+      },
+      {
+        id: `cb-sang`,
+        category: `Combo`,
+        name: `Combo Đọc Sớm`,
+        price: 65000,
+        desc: `01 ly Cà phê Việt tự chọn + 01 phần bánh quy bơ thủ công (áp dụng giờ thấp điểm).`,
+        signature: false
+      },
+      {
+        id: `cb-taptrung`,
+        category: `Combo`,
+        name: `Combo Tập Trung`,
+        price: 79000,
+        desc: `01 Cà phê máy hoặc Trà trái cây + 01 Croissant bơ Pháp nướng giòn mỗi ngày.`,
+        signature: true
+      },
+      {
+        id: `cb-trithuc`,
+        category: `Combo`,
+        name: `Combo Tri Thức Toàn Diện`,
+        price: 89000,
+        desc: `01 Đồ uống Signature + 01 Bánh ngọt/Sandwich + ưu tiên giữ chỗ bàn yên tĩnh tầng 2.`,
+        signature: true
+      },
+      {
+        id: `tb-tradao`,
+        category: `Trà & Bánh`,
+        name: `Trà Đào Cam Sả`,
+        price: 45000,
+        desc: `Trà đen ủ lạnh thanh mát kết hợp đào miếng giòn, cam vàng và hương sả dịu nhẹ.`,
+        signature: false
+      },
+      {
+        id: `tb-trahoaqua`,
+        category: `Trà & Bánh`,
+        name: `Trà Hoa Quả Nhiệt Đới`,
+        price: 49000,
+        desc: `Vị trà thảo mộc dịu ngọt tự nhiên từ trái cây tươi theo mùa, ít calo.`,
+        signature: false
+      },
+      {
+        id: `tb-matcha`,
+        category: `Trà & Bánh`,
+        name: `Matcha Latte / Cacao Nguyên Chất`,
+        price: 55000,
+        desc: `Bột trà xanh Nhật hoặc cacao nguyên chất ít đường giúp tỉnh táo nhẹ nhàng.`,
+        signature: false
+      },
+      {
+        id: `tb-banh`,
+        category: `Trà & Bánh`,
+        name: `Croissant Bơ / Sandwich Nhỏ`,
+        price: 35000,
+        desc: `Đồ ăn nhẹ tiện lợi, ít vụn và không mùi gắt, giữ sạch sẽ cho trang sách.`,
+        signature: false
+      }
+    ];
+
+    const BOOKS_DATA = [
+      {
+        id: `bk-1`,
+        code: `VH-01 · Tầng 2`,
+        genre: `Văn học`,
+        title: `Nhà Giả Kim`,
+        author: `Paulo Coelho · NXB Văn Học / Nhã Nam`,
+        summary: `Hành trình theo đuổi vận mệnh và lắng nghe trái tim, phù hợp nhâm nhi cùng một tách cà phê nóng cuối tuần.`,
+        status: `Sẵn trên kệ tầng 2`
+      },
+      {
+        id: `bk-2`,
+        code: `VH-08 · Tầng 2`,
+        genre: `Văn học`,
+        title: `Cà Phê Cùng Tony`,
+        author: `Tony Buổi Sáng · NXB Trẻ`,
+        summary: `Những câu chuyện nhẹ nhàng, hài hước và giàu cảm hứng học hỏi, lập nghiệp dành cho bạn trẻ.`,
+        status: `Sẵn trên kệ tầng 2`
+      },
+      {
+        id: `bk-3`,
+        code: `KN-03 · Tầng 2`,
+        genre: `Kỹ năng sống`,
+        title: `Thói Quen Nguyên Tử (Atomic Habits)`,
+        author: `James Clear · NXB Thế Giới / Alpha Books`,
+        summary: `Phương pháp xây dựng thói quen đọc sách và làm việc hiệu quả thông qua những thay đổi nhỏ mỗi ngày.`,
+        status: `Sẵn trên kệ tầng 2`
+      },
+      {
+        id: `bk-4`,
+        code: `KN-11 · Tầng 2`,
+        genre: `Kỹ năng sống`,
+        title: `Làm Ra Làm, Chơi Ra Chơi (Deep Work)`,
+        author: `Cal Newport · Thái Hà Books`,
+        summary: `Nghệ thuật tập trung sâu không bị xao nhãng trong kỷ nguyên số — đọc ngay tại khu Silent Reading.`,
+        status: `Đọc tại chỗ hoặc đặt mua`
+      },
+      {
+        id: `bk-5`,
+        code: `KD-02 · Tầng 2`,
+        genre: `Kinh doanh`,
+        title: `Từ Tốt Đến Vĩ Đại`,
+        author: `Jim Collins · NXB Trẻ`,
+        summary: `Phân tích nguyên lý quản trị bền vững và kỷ luật vận hành cho kỹ sư, quản lý và người khởi nghiệp.`,
+        status: `Sẵn trên kệ tầng 2`
+      },
+      {
+        id: `bk-6`,
+        code: `KD-09 · Tầng 2`,
+        genre: `Kinh doanh`,
+        title: `Quốc Gia Khởi Nghiệp`,
+        author: `Dan Senor & Saul Singer · Alpha Books`,
+        summary: `Góc nhìn về tư duy đổi mới công nghệ và tinh thần vượt giới hạn trong phát triển kinh tế.`,
+        status: `Sẵn trên kệ tầng 2`
+      },
+      {
+        id: `bk-7`,
+        code: `TL-04 · Tầng 2`,
+        genre: `Tâm lý`,
+        title: `Tư Duy Nhanh Và Chậm`,
+        author: `Daniel Kahneman · Thái Hà Books`,
+        summary: `Khám phá hai hệ thống vận hành tâm trí và cách con người đưa ra quyết định trong học tập, công việc.`,
+        status: `Đọc tại chỗ hoặc đặt mua`
+      },
+      {
+        id: `bk-8`,
+        code: `TN-01 · Tầng 1`,
+        genre: `Thiếu nhi`,
+        title: `Dế Mèn Phiêu Lưu Ký`,
+        author: `Tô Hoài · NXB Kim Đồng`,
+        summary: `Tác phẩm kinh điển cho góc đọc gia đình cuối tuần, nuôi dưỡng tình yêu tiếng Việt và thiên nhiên.`,
+        status: `Sẵn tại góc gia đình`
+      }
+    ];
+
+    const ZONES_DATA = {
+      't2-reading': {
+        id: `t2-reading`,
+        floor: 2,
+        name: `Khu đọc sách yên tĩnh (Silent Reading)`,
+        bookingValue: `Khu đọc sách yên tĩnh (Tầng 2 · 35 m²)`,
+        area: `35 m²`,
+        capacity: `14 – 18 chỗ cá nhân`,
+        noise: `Im lặng tuyệt đối`,
+        amenities: `Đèn đọc sách riêng, ghế tựa êm, kệ sách 1.800+ đầu sách kịch trần`,
+        desc: `Phân khu cốt lõi của tầng 2 với bàn đọc đơn tách biệt, ánh sáng vàng dịu chống lóa và quy tắc không trao đổi thoại, giúp độc giả đắm chìm trọn vẹn vào trang sách.`
+      },
+      't2-study': {
+        id: `t2-study`,
+        floor: 2,
+        name: `Khu học tập & làm việc chuyên sâu`,
+        bookingValue: `Khu học tập & làm việc có ổ cắm (Tầng 2 · 25 m²)`,
+        area: `25 m²`,
+        capacity: `10 – 14 chỗ ngồi`,
+        noise: `Yên tĩnh (dùng tai nghe)`,
+        amenities: `Bàn dài công thái học, ổ cắm điện từng chỗ, Wi-Fi 6 tách băng thông`,
+        desc: `Thiết kế riêng cho sinh viên ôn thi, kỹ sư KCN Yên Bình và người làm việc từ xa cần sự tập trung dài giờ với hạ tầng điện – mạng ổn định.`
+      },
+      't1-common': {
+        id: `t1-common`,
+        floor: 1,
+        name: `Khu ngồi chung linh hoạt & Góc xanh`,
+        bookingValue: `Khu ngồi chung linh hoạt (Tầng 1 · 25 m²)`,
+        area: `25 m²`,
+        capacity: `10 – 14 khách (đi lẻ/đôi)`,
+        noise: `Trò chuyện nhẹ nhàng`,
+        amenities: `Ánh sáng tự nhiên cửa kính, cây xanh, góc sách thiếu nhi & gia đình`,
+        desc: `Phù hợp cho khách ghé thưởng thức nhanh ly cà phê sáng, đọc báo – sách mới hoặc gia đình trẻ đưa con đến trải nghiệm đọc sách cuối tuần.`
+      },
+      't1-group': {
+        id: `t1-group`,
+        floor: 1,
+        name: `Khu thảo luận nhóm nhỏ & Book Club`,
+        bookingValue: `Khu thảo luận nhóm nhỏ (Tầng 1 · 15 m²)`,
+        area: `15 m²`,
+        capacity: `2 – 3 bàn nhóm (3–5 người/bàn)`,
+        noise: `Thảo luận âm lượng vừa`,
+        amenities: `Bàn nhóm rộng, ổ cắm sàn, bảng ghi chú nhỏ cho sinh hoạt CLB sách`,
+        desc: `Tách biệt khỏi tầng 2 để các nhóm sinh viên làm bài tập hoặc đồng nghiệp trao đổi công việc thoải mái mà không ảnh hưởng đến người đang đọc sách.`
+      },
+      't1-bar': {
+        id: `t1-bar`,
+        floor: 1,
+        name: `Quầy pha chế mở & Kệ bán lẻ O2O`,
+        bookingValue: `Khu ngồi chung linh hoạt (Tầng 1 · 25 m²)`,
+        area: `15 m² + 5 m² kệ`,
+        capacity: `Đón khách & nhận đơn mang đi`,
+        noise: `Khu vực vận hành`,
+        amenities: `Máy pha Espresso, trưng bày cà phê đóng gói, sách mới & phụ kiện đọc`,
+        desc: `Luồng order – thanh toán VietQR/POS – nhận đồ gọn gàng, đặt tách biệt với khu đọc yên tĩnh để hạn chế tối đa tiếng máy xay cà phê.`
+      }
+    };
+
+    const LANDMARKS = {
+      bbc: `<strong>Book &amp; Bean Coffee (Trung tâm Ba Hàng, TP. Phổ Yên):</strong> Vị trí dự kiến trên trục Trường Chinh / Nguyễn Cấu / Phạm Văn Đồng. Phủ sóng giao đồ uống nhanh trong bán kính 5 km quanh phường Ba Hàng.`,
+      yenbinh: `<strong>KCN Yên Bình &amp; Tổ hợp Samsung SEVT (~5–8 phút di chuyển):</strong> Nhóm khách hàng kỹ sư, chuyên gia trọng tâm đến đọc sách cuối tuần, làm việc từ xa và đặt cà phê đóng gói định kỳ.`,
+      truonghoc: `<strong>Cụm Trường THPT, Cao đẳng &amp; Chợ Phổ Yên (~4–7 phút di chuyển):</strong> Nguồn khách học sinh, sinh viên tìm kiếm không gian tự học, học nhóm yên tĩnh với mức giá từ 35.000đ.`,
+      diemthuy: `<strong>Hướng KCN Điềm Thụy (~10–12 phút di chuyển):</strong> Mở rộng tệp khách nhân viên văn phòng và gia đình trẻ đặt hàng trực tuyến qua book&beancoffee.`
+    };
+
+    let currentMenuCategory = `all`;
+    let currentBookGenre = `all`;
+    let currentBookSearch = ``;
+    let currentFloor = 2;
+    let selectedZoneId = `t2-reading`;
+    let cart = [];
+    let bookings = [];
+    let isStateReady = false;
+
+    function formatCurrency(amount) {
+      return Number(amount).toLocaleString(`vi-VN`) + `đ`;
+    }
+
+    function persistState() {
+      if (!isStateReady || !window.notebookAppApi || typeof window.notebookAppApi.setAppState !== `function`) {
+        return;
+      }
+      window.notebookAppApi.setAppState({
+        cart: cart,
+        bookings: bookings,
+        selectedZoneId: selectedZoneId
+      }).catch(function () {});
+    }
+
+    function renderMenu() {
+      const container = document.getElementById(`menu-grid`);
+      if (!container) return;
+
+      const filtered = MENU_ITEMS.filter(function (item) {
+        return currentMenuCategory === `all` || item.category === currentMenuCategory;
+      });
+
+      container.innerHTML = filtered.map(function (item) {
+        const sigClass = item.signature ? ` is-signature` : ``;
+        const sigTag = item.signature ? ` · Đặc trưng` : ``;
+        return `
+          <article class="menu-item-card${sigClass}">
+            <div>
+              <div class="menu-cat-tag">${item.category}${sigTag}</div>
+              <h3 class="menu-item-name">${item.name}</h3>
+              <p class="menu-item-desc">${item.desc}</p>
+            </div>
+            <div class="menu-item-footer">
+              <span class="menu-price">${formatCurrency(item.price)}</span>
+              <button type="button" class="add-item-btn" onclick="addToCart('${item.id}')">
+                <span>+ Chọn món</span>
+              </button>
+            </div>
+          </article>
+        `;
+      }).join(``);
+    }
+
+    function filterMenu(category) {
+      currentMenuCategory = category;
+      const btns = document.querySelectorAll(`[data-menu-cat]`);
+      btns.forEach(function (btn) {
+        if (btn.getAttribute(`data-menu-cat`) === category) {
+          btn.classList.add(`is-active`);
+        } else {
+          btn.classList.remove(`is-active`);
+        }
+      });
+      renderMenu();
+    }
+
+    function addToCart(itemId) {
+      const foundItem = MENU_ITEMS.find(function (m) { return m.id === itemId; });
+      if (!foundItem) return;
+
+      const existing = cart.find(function (c) { return c.id === itemId; });
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({
+          id: foundItem.id,
+          name: foundItem.name,
+          price: foundItem.price,
+          qty: 1
+        });
+      }
+      renderCart();
+      persistState();
+    }
+
+    function updateCartQty(itemId, delta) {
+      const idx = cart.findIndex(function (c) { return c.id === itemId; });
+      if (idx === -1) return;
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) {
+        cart.splice(idx, 1);
+      }
+      renderCart();
+      persistState();
+    }
+
+    function clearCart() {
+      cart = [];
+      const fb = document.getElementById(`cart-feedback`);
+      if (fb) {
+        fb.classList.remove(`is-visible`, `is-success`, `is-error`);
+        fb.textContent = ``;
+      }
+      renderCart();
+      persistState();
+    }
+
+    function renderCart() {
+      const listEl = document.getElementById(`cart-items-container`);
+      const countBadge = document.getElementById(`header-cart-count`);
+      const subtotalEl = document.getElementById(`cart-subtotal`);
+      const discountEl = document.getElementById(`cart-discount`);
+      const totalEl = document.getElementById(`cart-total`);
+      const promoNoteEl = document.getElementById(`cart-promo-note`);
+      if (!listEl || !countBadge || !subtotalEl || !discountEl || !totalEl) return;
+
+      const totalQty = cart.reduce(function (sum, item) { return sum + item.qty; }, 0);
+      countBadge.textContent = String(totalQty);
+
+      if (cart.length === 0) {
+        listEl.innerHTML = `<div class="cart-empty">Giỏ hàng đang trống. Hãy nhấn <strong>“+ Chọn món”</strong> ở thực đơn bên cạnh để thêm đồ uống hoặc combo đọc sách.</div>`;
+        subtotalEl.textContent = `0đ`;
+        discountEl.textContent = `0đ`;
+        totalEl.textContent = `0đ`;
+        if (promoNoteEl) {
+          promoNoteEl.textContent = `Đơn hàng từ 250.000đ được miễn phí giao nhận trong bán kính 5 km tại TP. Phổ Yên.`;
+        }
+        return;
+      }
+
+      listEl.innerHTML = cart.map(function (item) {
+        return `
+          <div class="cart-row">
+            <div>
+              <div class="cart-row-name">${item.name}</div>
+              <div class="cart-row-sub">${formatCurrency(item.price)} × ${item.qty} = ${formatCurrency(item.price * item.qty)}</div>
+            </div>
+            <div class="qty-controls">
+              <button type="button" class="qty-btn" aria-label="Giảm số lượng ${item.name}" onclick="updateCartQty('${item.id}', -1)">−</button>
+              <span class="qty-val">${item.qty}</span>
+              <button type="button" class="qty-btn" aria-label="Tăng số lượng ${item.name}" onclick="updateCartQty('${item.id}', 1)">+</button>
+            </div>
+          </div>
+        `;
+      }).join(``);
+
+      const subtotal = cart.reduce(function (sum, item) { return sum + (item.price * item.qty); }, 0);
+      const discount = subtotal >= 250000 ? Math.round(subtotal * 0.1) : 0;
+      const total = subtotal - discount;
+
+      subtotalEl.textContent = formatCurrency(subtotal);
+      discountEl.textContent = discount > 0 ? `-` + formatCurrency(discount) : `0đ`;
+      totalEl.textContent = formatCurrency(total);
+
+      if (promoNoteEl) {
+        if (subtotal >= 250000) {
+          promoNoteEl.textContent = `Đủ điều kiện miễn phí giao nhận bán kính 5 km Phổ Yên + ưu đãi thành viên 10% (mô phỏng).`;
+        } else {
+          const remaining = 250000 - subtotal;
+          promoNoteEl.textContent = `Chọn thêm ${formatCurrency(remaining)} để đạt mức ưu đãi 10% và miễn phí giao nội thành.`;
+        }
+      }
+    }
+
+    function submitTestOrder() {
+      const fb = document.getElementById(`cart-feedback`);
+      const methodEl = document.getElementById(`cart-payment-method`);
+      const noteEl = document.getElementById(`cart-order-note`);
+      if (!fb) return;
+
+      if (cart.length === 0) {
+        fb.className = `inline-feedback is-visible is-error`;
+        fb.textContent = `Giỏ hàng chưa có sản phẩm. Vui lòng chọn ít nhất một món trước khi xác nhận đơn thử nghiệm.`;
+        return;
+      }
+
+      const subtotal = cart.reduce(function (sum, item) { return sum + (item.price * item.qty); }, 0);
+      const discount = subtotal >= 250000 ? Math.round(subtotal * 0.1) : 0;
+      const total = subtotal - discount;
+      const method = methodEl ? methodEl.value : `VietQR động`;
+      const note = noteEl && noteEl.value.trim() ? noteEl.value.trim() : `Không có ghi chú thêm`;
+      const orderCode = `BBC-ORD-` + String(Math.floor(1000 + Math.random() * 9000));
+
+      fb.className = `inline-feedback is-visible is-success`;
+      fb.innerHTML = `<strong>Đã ghi nhận đơn mô phỏng (${orderCode}):</strong> ${cart.length} nhóm món · Tổng dự kiến <strong>${formatCurrency(total)}</strong> · Thanh toán: ${method}. Ghi chú: ${note}. <em>(Lưu ý: đây là phiếu xác nhận thử nghiệm trên giao diện, chưa phát sinh thanh toán thật).</em>`;
+    }
+
+    function renderBooks() {
+      const container = document.getElementById(`book-grid`);
+      if (!container) return;
+
+      const q = currentBookSearch.trim().toLowerCase();
+      const filtered = BOOKS_DATA.filter(function (bk) {
+        const matchGenre = currentBookGenre === `all` || bk.genre === currentBookGenre;
+        const matchSearch = !q || bk.title.toLowerCase().includes(q) || bk.author.toLowerCase().includes(q) || bk.genre.toLowerCase().includes(q);
+        return matchGenre && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="cart-empty" style="grid-column: 1 / -1;">Không tìm thấy đầu sách khớp với từ khóa “${currentBookSearch}”. Hãy thử chọn thể loại khác hoặc xóa từ khóa tìm kiếm.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(function (bk) {
+        return `
+          <article class="book-card">
+            <div>
+              <div class="book-code-row">
+                <span class="book-shelf-code">${bk.code}</span>
+                <span class="book-genre-badge">${bk.genre}</span>
+              </div>
+              <h3 class="book-title">${bk.title}</h3>
+              <p class="book-author">${bk.author}</p>
+              <p class="book-summary">${bk.summary}</p>
+            </div>
+            <div class="book-meta">
+              <span style="color: var(--secondary); font-weight: 600;">${bk.status}</span>
+              <button type="button" class="add-item-btn" onclick="reserveBookNote('${bk.title}')">Đặt bàn đọc cuốn này</button>
+            </div>
+          </article>
+        `;
+      }).join(``);
+    }
+
+    function filterBooks(genre) {
+      currentBookGenre = genre;
+      const btns = document.querySelectorAll(`[data-book-genre]`);
+      btns.forEach(function (btn) {
+        if (btn.getAttribute(`data-book-genre`) === genre) {
+          btn.classList.add(`is-active`);
+        } else {
+          btn.classList.remove(`is-active`);
+        }
+      });
+      renderBooks();
+    }
+
+    function searchBooks(val) {
+      currentBookSearch = val || ``;
+      renderBooks();
+    }
+
+    function reserveBookNote(bookTitle) {
+      const noteField = document.getElementById(`booking-note`);
+      const zoneField = document.getElementById(`booking-zone`);
+      if (noteField) {
+        noteField.value = `Giữ giúp cuốn "${bookTitle}" để đọc tại chỗ.`;
+      }
+      if (zoneField) {
+        zoneField.value = `Khu đọc sách yên tĩnh (Tầng 2 · 35 m²)`;
+      }
+      const bookingSection = document.getElementById(`dat-ban`);
+      if (bookingSection) {
+        bookingSection.scrollIntoView({ behavior: `smooth` });
+      }
+    }
+
+    function switchFloor(floorNum) {
+      currentFloor = floorNum;
+      const t1 = document.getElementById(`tab-floor-1`);
+      const t2 = document.getElementById(`tab-floor-2`);
+      if (t1 && t2) {
+        t1.classList.toggle(`is-active`, floorNum === 1);
+        t2.classList.toggle(`is-active`, floorNum === 2);
+      }
+      if (floorNum === 2 && !selectedZoneId.startsWith(`t2-`)) {
+        selectedZoneId = `t2-reading`;
+      }
+      if (floorNum === 1 && !selectedZoneId.startsWith(`t1-`)) {
+        selectedZoneId = `t1-common`;
+      }
+      renderFloorplan();
+      renderZoneDetail();
+      renderZonesQuickList();
+    }
+
+    function selectZone(zoneId) {
+      const z = ZONES_DATA[zoneId];
+      if (!z) return;
+      selectedZoneId = zoneId;
+      if (z.floor !== currentFloor) {
+        currentFloor = z.floor;
+        const t1 = document.getElementById(`tab-floor-1`);
+        const t2 = document.getElementById(`tab-floor-2`);
+        if (t1 && t2) {
+          t1.classList.toggle(`is-active`, currentFloor === 1);
+          t2.classList.toggle(`is-active`, currentFloor === 2);
+        }
+      }
+      renderFloorplan();
+      renderZoneDetail();
+      renderZonesQuickList();
+      persistState();
+    }
+
+    function renderFloorplan() {
+      const svg = document.getElementById(`floorplan-svg`);
+      if (!svg) return;
+
+      if (currentFloor === 2) {
+        svg.innerHTML = `
+          <rect x="20" y="20" width="520" height="320" rx="8" fill="var(--surface-elevated)" stroke="var(--outline)" stroke-width="2" />
+          <text x="36" y="46" font-family="var(--font-label)" font-size="11" font-weight="600" fill="var(--secondary)">TẦNG 2 · KHÔNG GIAN ĐỌC SÁCH &amp; HỌC TẬP (70 m² CHÍNH)</text>
+
+          <!-- Khu đọc yên tĩnh -->
+          <g class="zone-rect" onclick="selectZone('t2-reading')">
+            <rect x="36" y="64" width="280" height="210" rx="6" fill="${selectedZoneId === 't2-reading' ? 'var(--secondary-container)' : 'var(--surface-container-low)'}" stroke="${selectedZoneId === 't2-reading' ? 'var(--secondary)' : 'var(--outline-variant)'}" stroke-width="${selectedZoneId === 't2-reading' ? '2.5' : '1.5'}" />
+            <text x="176" y="152" text-anchor="middle" font-family="var(--font-headline)" font-size="16" font-weight="600" fill="var(--on-surface)">Khu đọc sách yên tĩnh</text>
+            <text x="176" y="176" text-anchor="middle" font-family="var(--font-label)" font-size="11" fill="var(--secondary)">35 m² · SILENT READING ZONE</text>
+            <text x="176" y="198" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--on-surface-variant)">Kệ sách kịch trần · Bàn đơn · Đèn đọc</text>
+          </g>
+
+          <!-- Khu học / làm việc -->
+          <g class="zone-rect" onclick="selectZone('t2-study')">
+            <rect x="332" y="64" width="192" height="170" rx="6" fill="${selectedZoneId === 't2-study' ? 'var(--secondary-container)' : 'var(--surface-container-low)'}" stroke="${selectedZoneId === 't2-study' ? 'var(--secondary)' : 'var(--outline-variant)'}" stroke-width="${selectedZoneId === 't2-study' ? '2.5' : '1.5'}" />
+            <text x="428" y="138" text-anchor="middle" font-family="var(--font-headline)" font-size="15" font-weight="600" fill="var(--on-surface)">Khu học &amp; làm việc</text>
+            <text x="428" y="160" text-anchor="middle" font-family="var(--font-label)" font-size="11" fill="var(--secondary)">25 m² · Ổ CẮM + WI-FI 6</text>
+            <text x="428" y="182" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--on-surface-variant)">Bàn dài · Ghế tựa công thái học</text>
+          </g>
+
+          <!-- Cầu thang & phụ trợ -->
+          <rect x="332" y="246" width="192" height="74" rx="6" fill="var(--surface-container)" stroke="var(--outline-variant)" stroke-width="1.5" />
+          <text x="428" y="286" text-anchor="middle" font-family="var(--font-label)" font-size="11" fill="var(--on-surface-variant)">CẦU THANG · KHO SÁCH · LỐI THOÁT HIỂM</text>
+          <rect x="36" y="284" width="280" height="36" rx="4" fill="var(--primary-container)" />
+          <text x="176" y="306" text-anchor="middle" font-family="var(--font-label)" font-size="10.5" fill="var(--primary)">HỆ KỆ SÁCH 1.800+ ĐẦU SÁCH &amp; CỬA SỔ SÁNG TỰ NHIÊN</text>
+        `;
+      } else {
+        svg.innerHTML = `
+          <rect x="20" y="20" width="520" height="320" rx="8" fill="var(--surface-elevated)" stroke="var(--outline)" stroke-width="2" />
+          <text x="36" y="46" font-family="var(--font-label)" font-size="11" font-weight="600" fill="var(--secondary)">TẦNG 1 · PHA CHẾ, TRƯNG BÀY &amp; THẢO LUẬN (70 m² CHÍNH)</text>
+
+          <!-- Quầy pha chế + kệ bán lẻ -->
+          <g class="zone-rect" onclick="selectZone('t1-bar')">
+            <rect x="36" y="64" width="176" height="165" rx="6" fill="${selectedZoneId === 't1-bar' ? 'var(--secondary-container)' : 'var(--primary-container)'}" stroke="${selectedZoneId === 't1-bar' ? 'var(--secondary)' : 'var(--outline)'}" stroke-width="${selectedZoneId === 't1-bar' ? '2.5' : '1.5'}" />
+            <text x="124" y="138" text-anchor="middle" font-family="var(--font-headline)" font-size="15" font-weight="600" fill="var(--on-surface)">Quầy pha chế &amp; Kệ O2O</text>
+            <text x="124" y="160" text-anchor="middle" font-family="var(--font-label)" font-size="11" fill="var(--primary)">15 m² + 5 m² TRƯNG BÀY</text>
+            <text x="124" y="182" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--on-surface-variant)">Order · VietQR · Bán cà phê gói</text>
+          </g>
+
+          <!-- Khu ngồi chung -->
+          <g class="zone-rect" onclick="selectZone('t1-common')">
+            <rect x="228" y="64" width="296" height="140" rx="6" fill="${selectedZoneId === 't1-common' ? 'var(--secondary-container)' : 'var(--surface-container-low)'}" stroke="${selectedZoneId === 't1-common' ? 'var(--secondary)' : 'var(--outline-variant)'}" stroke-width="${selectedZoneId === 't1-common' ? '2.5' : '1.5'}" />
+            <text x="376" y="126" text-anchor="middle" font-family="var(--font-headline)" font-size="16" font-weight="600" fill="var(--on-surface)">Khu ngồi chung linh hoạt</text>
+            <text x="376" y="148" text-anchor="middle" font-family="var(--font-label)" font-size="11" fill="var(--secondary)">25 m² · GÓC XANH &amp; GIA ĐÌNH</text>
+            <text x="376" y="170" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--on-surface-variant)">Bàn đơn / đôi · Góc sách thiếu nhi</text>
+          </g>
+
+          <!-- Khu nhóm nhỏ -->
+          <g class="zone-rect" onclick="selectZone('t1-group')">
+            <rect x="228" y="218" width="192" height="102" rx="6" fill="${selectedZoneId === 't1-group' ? 'var(--secondary-container)' : 'var(--surface-container-low)'}" stroke="${selectedZoneId === 't1-group' ? 'var(--secondary)' : 'var(--outline-variant)'}" stroke-width="${selectedZoneId === 't1-group' ? '2.5' : '1.5'}" />
+            <text x="324" y="262" text-anchor="middle" font-family="var(--font-headline)" font-size="15" font-weight="600" fill="var(--on-surface)">Khu nhóm nhỏ 3–5 người</text>
+            <text x="324" y="284" text-anchor="middle" font-family="var(--font-label)" font-size="11" fill="var(--secondary)">15 m² · THẢO LUẬN VỪA PHẢI</text>
+          </g>
+
+          <!-- Phụ trợ WC & Lối vào -->
+          <rect x="36" y="242" width="176" height="78" rx="6" fill="var(--surface-container)" stroke="var(--outline-variant)" stroke-width="1.5" />
+          <text x="124" y="285" text-anchor="middle" font-family="var(--font-label)" font-size="10.5" fill="var(--on-surface-variant)">LỐI VÀO · BÃI XE · CẦU THANG</text>
+          <rect x="432" y="218" width="92" height="102" rx="6" fill="var(--surface-container)" stroke="var(--outline-variant)" stroke-width="1.5" />
+          <text x="478" y="272" text-anchor="middle" font-family="var(--font-label)" font-size="10.5" fill="var(--on-surface-variant)">WC &amp; KHO</text>
+        `;
+      }
+    }
+
+    function renderZoneDetail() {
+      const panel = document.getElementById(`zone-detail-panel`);
+      const z = ZONES_DATA[selectedZoneId];
+      if (!panel || !z) return;
+
+      panel.innerHTML = `
+        <div>
+          <p class="washi-label">Tầng ${z.floor} · Chi tiết phân khu</p>
+          <h3 class="book-title" style="font-size: 1.35rem; margin-top: 4px;">${z.name}</h3>
+          <p class="washi-note" style="margin-top: 8px;">${z.desc}</p>
+        </div>
+        <div class="zone-specs">
+          <div class="spec-box">
+            <div class="spec-label">Diện tích định hướng</div>
+            <div class="spec-val">${z.area}</div>
+          </div>
+          <div class="spec-box">
+            <div class="spec-label">Sức chứa dự kiến</div>
+            <div class="spec-val">${z.capacity}</div>
+          </div>
+          <div class="spec-box">
+            <div class="spec-label">Quy chuẩn âm thanh</div>
+            <div class="spec-val">${z.noise}</div>
+          </div>
+          <div class="spec-box">
+            <div class="spec-label">Tiện ích đi kèm</div>
+            <div class="spec-val">${z.amenities}</div>
+          </div>
+        </div>
+        <button type="button" class="btn-olive" onclick="chooseZoneForBooking('${z.id}')">
+          <span>Chọn khu vực này để đặt bàn</span>
+        </button>
+      `;
+    }
+
+    function renderZonesQuickList() {
+      const container = document.getElementById(`zones-quick-list`);
+      if (!container) return;
+
+      const list = [`t2-reading`, `t2-study`, `t1-common`, `t1-group`];
+      container.innerHTML = list.map(function (id) {
+        const z = ZONES_DATA[id];
+        const activeClass = selectedZoneId === id ? ` is-active` : ``;
+        return `
+          <button type="button" class="zone-mini-btn${activeClass}" onclick="selectZone('${id}')">
+            <div class="book-genre-badge">Tầng ${z.floor} · ${z.area}</div>
+            <div style="font-weight: 600; color: var(--on-surface); margin-top: 4px;">${z.name}</div>
+            <div style="font-size: 0.8125rem; color: var(--on-surface-variant); margin-top: 2px;">${z.noise}</div>
+          </button>
+        `;
+      }).join(``);
+    }
+
+    function chooseZoneForBooking(zoneId) {
+      const z = ZONES_DATA[zoneId];
+      const zoneSelect = document.getElementById(`booking-zone`);
+      if (z && zoneSelect) {
+        zoneSelect.value = z.bookingValue;
+      }
+      const target = document.getElementById(`dat-ban`);
+      if (target) {
+        target.scrollIntoView({ behavior: `smooth` });
+      }
+    }
+
+    function renderBookings() {
+      const listEl = document.getElementById(`saved-bookings-list`);
+      if (!listEl) return;
+
+      if (bookings.length === 0) {
+        listEl.innerHTML = `<div class="cart-empty">Chưa có phiếu đặt bàn nào. Hãy điền thông tin bên trái để giữ chỗ trước khi đến quán.</div>`;
+        return;
+      }
+
+      listEl.innerHTML = bookings.map(function (b) {
+        return `
+          <div class="saved-booking-item">
+            <div class="booking-item-top">
+              <span class="booking-code">${b.code}</span>
+              <button type="button" class="cart-clear-btn" style="min-height: 32px; padding: 2px 6px;" onclick="cancelBooking('${b.code}')">Hủy lịch</button>
+            </div>
+            <div style="font-weight: 600; font-size: 0.92rem; color: var(--on-surface);">${b.name} · ${b.guests}</div>
+            <div style="font-size: 0.82rem; color: var(--on-surface-variant);">${b.date} · ${b.time}</div>
+            <div style="font-size: 0.82rem; color: var(--secondary); font-weight: 600;">${b.zone}</div>
+            ${b.note ? `<div style="font-size: 0.8rem; color: var(--on-surface-variant);">Ghi chú: ${b.note}</div>` : ``}
+          </div>
+        `;
+      }).join(``);
+    }
+
+    function handleBookingSubmit(event) {
+      event.preventDefault();
+      const dateEl = document.getElementById(`booking-date`);
+      const timeEl = document.getElementById(`booking-time`);
+      const guestsEl = document.getElementById(`booking-guests`);
+      const zoneEl = document.getElementById(`booking-zone`);
+      const nameEl = document.getElementById(`booking-name`);
+      const phoneEl = document.getElementById(`booking-phone`);
+      const noteEl = document.getElementById(`booking-note`);
+      const fb = document.getElementById(`booking-feedback`);
+
+      if (!dateEl || !timeEl || !guestsEl || !zoneEl || !nameEl || !phoneEl || !fb) return;
+
+      const nameVal = nameEl.value.trim();
+      const phoneVal = phoneEl.value.trim();
+      if (nameVal.length < 2 || phoneVal.length < 8) {
+        fb.className = `booking-full inline-feedback is-visible is-error`;
+        fb.textContent = `Vui lòng nhập đầy đủ họ tên và số điện thoại hợp lệ (ít nhất 8 chữ số) để hệ thống tạo mã giữ chỗ.`;
+        return;
+      }
+
+      const newBooking = {
+        code: `BBC-RES-` + String(Math.floor(1000 + Math.random() * 9000)),
+        date: dateEl.value,
+        time: timeEl.value,
+        guests: guestsEl.value,
+        zone: zoneEl.value,
+        name: nameVal,
+        phone: phoneVal,
+        note: noteEl ? noteEl.value.trim() : ``
+      };
+
+      bookings.unshift(newBooking);
+      if (bookings.length > 5) {
+        bookings = bookings.slice(0, 5);
+      }
+
+      renderBookings();
+      persistState();
+
+      fb.className = `booking-full inline-feedback is-visible is-success`;
+      fb.innerHTML = `<strong>Đặt bàn thử nghiệm thành công (${newBooking.code}):</strong> Đã giữ chỗ tại <strong>${newBooking.zone}</strong> vào ngày <strong>${newBooking.date}</strong> (${newBooking.time}). Hệ thống giữ bàn trong 15 phút kể từ giờ hẹn.`;
+
+      nameEl.value = ``;
+      phoneEl.value = ``;
+      if (noteEl) noteEl.value = ``;
+    }
+
+    function cancelBooking(code) {
+      bookings = bookings.filter(function (b) { return b.code !== code; });
+      renderBookings();
+      persistState();
+    }
+
+    function selectLandmark(key) {
+      const infoEl = document.getElementById(`map-landmark-info`);
+      if (!infoEl) return;
+      infoEl.innerHTML = LANDMARKS[key] || LANDMARKS.bbc;
+    }
+
+    async function initApp() {
+      const dateInput = document.getElementById(`booking-date`);
+      if (dateInput && !dateInput.value) {
+        dateInput.value = `2026-11-20`;
+      }
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved) {
+            if (Array.isArray(saved.cart)) cart = saved.cart;
+            if (Array.isArray(saved.bookings)) bookings = saved.bookings;
+            if (saved.selectedZoneId && ZONES_DATA[saved.selectedZoneId]) {
+              selectedZoneId = saved.selectedZoneId;
+              currentFloor = ZONES_DATA[selectedZoneId].floor;
+            }
+          }
+        } catch (err) {}
+      }
+      isStateReady = true;
+
+      renderMenu();
+      renderCart();
+      renderBooks();
+      renderFloorplan();
+      renderZoneDetail();
+      renderZonesQuickList();
+      renderBookings();
+
+      const t1 = document.getElementById(`tab-floor-1`);
+      const t2 = document.getElementById(`tab-floor-2`);
+      if (t1 && t2) {
+        t1.classList.toggle(`is-active`, currentFloor === 1);
+        t2.classList.toggle(`is-active`, currentFloor === 2);
+      }
+
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, initApp);
+  </script>
+</body>
+</html>
